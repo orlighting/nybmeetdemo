@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-//10.29 完成第一版，id暂时用123123代替
 
-//用户上报简易申报表单的接口
+/**
+ * 用户上报简易申报表单的接口
+ * 10.29 完成第一版，id暂时用123123代替
+ */
 @Controller
 public class EasyController {
 
@@ -25,15 +27,13 @@ public class EasyController {
     @ResponseBody
     public HttpResult easy(@RequestBody EasyMeet easyMeet) {
 
-        EasyMeet tempeasy = easyMeet;
-
         easyMeet.setId(123123123);
         easyMeet.setDelete(false);
         easyMeet.setCreateTime(LocalDateTime.now());
         easyMeet.setUpdateTime(LocalDateTime.now());
         easyMeet.setCheckState(0);
 
-        if (easyMapper.add(tempeasy) == 1) {
+        if (easyMapper.add(easyMeet) == 1) {
             return HttpResult.of();
         }
 

@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.Objects;
 
-//10.29 完成了用户部分的登录开发
-
-
-//登录控制
+/**
+ * 登录控制
+ * 10.29 完成了用户部分的登录开发
+ */
 @Controller
 public class LoginController {
 
