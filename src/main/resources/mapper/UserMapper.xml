@@ -7,17 +7,17 @@
         <result column="id" property="id" />
         <result column="name" property="name" />
         <result column="password" property="password" />
-        <result column="telenum" property="telenum" />
+        <result column="tele_num" property="teleNum" />
         <result column="company" property="company" />
         <result column="department" property="department" />
         <result column="email" property="email" />
         <result column="portraiture" property="portraiture" />
-        <result column="identitycard" property="identitycard" />
+        <result column="identity_card" property="identityCard" />
         <result column="kind" property="kind" />
-        <result column="checkstate" property="checkstate" />
+        <result column="check_state" property="checkState" />
         <result column="delete" property="delete" />
-        <result column="createtime" property="createtime" />
-        <result column="updatetime" property="updatetime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
     </resultMap>
     <select id="findsById" resultMap="UserMap">
         select * from user where id = #{id}

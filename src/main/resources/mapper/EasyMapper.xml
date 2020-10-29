@@ -5,21 +5,21 @@
 <mapper namespace="com.example.nybproject.meet.mapper.EasyMapper">
     <resultMap id="EasyMeetMap" type="com.example.nybproject.meet.pojo.EasyMeet" >
         <result column="id" property="id" />
-        <result column="dmeetid" property="dmeetid" />
-        <result column="userid" property="userid" />
-        <result column="adminid" property="adminid" />
+        <result column="dmeet_id" property="dmeetId" />
+        <result column="user_id" property="userId" />
+        <result column="admin_id" property="adminId" />
         <result column="name" property="name" />
         <result column="host" property="host" />
         <result column="time" property="time" />
         <result column="place" property="place" />
         <result column="ps" property="ps" />
-        <result column="checkstate" property="checkstate" />
+        <result column="check_state" property="checkState" />
         <result column="delete" property="delete" />
-        <result column="createtime" property="createtime" />
-        <result column="updatetime" property="updatetime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
     </resultMap>
     <insert id="add">
-        insert into easymeet (id, dmeetid, userid, adminid, name, host, time, place, ps, checkstate, delete, createtime, updatetime)
-        values (#{id}, #{dmeetid}, #{userid}, #{adminid}, #{name}, #{host}, #{time}, #{place}, #{ps}, #{checkstate}, #{delete}, #{createtime}, #{updatetime})
+        insert into easymeet (id, dmeet_id, user_id, admin_id, name, host, time, place, ps, check_state, delete, create_time, update_time)
+        values (#{id}, #{dmeetId}, #{userId}, #{adminId}, #{name}, #{host}, #{time}, #{place}, #{ps}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
 </mapper>

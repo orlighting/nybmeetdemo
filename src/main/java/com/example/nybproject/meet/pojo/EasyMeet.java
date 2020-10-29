@@ -11,12 +11,69 @@ import java.util.Date;
 @Data
 public class EasyMeet {
 
-    //dmeetid 为对应展会计划的详细展会表单id，userid 对应提交该表单的用户的id，adminid 对应审核该表单的管理员的id
-    //checkstate 对应目前展会计划的审核状态（审核中[0]、已通过[1]、未通过，重新提交[2]）
-    Integer id, dmeetid, userid, adminid, checkstate;
-    String name, host, place, ps;
+    /**
+     * 本简易表单的id
+     */
+    Integer id;
+
+    /**
+     * 本简易表单对应的详细展会表单的id
+     */
+    Integer dmeetId;
+
+    /**
+     * 提交该表单的用户的id
+     */
+    Integer userId;
+
+    /**
+     * 审核该表单的管理员的id
+     */
+    Integer adminId;
+
+    /**
+     * 目前展会计划的审核状态（审核中[0]、已通过[1]、未通过，重新提交[2]）
+     */
+    Integer checkState;
+
+    /**
+     * 展会名称
+     */
+    String name;
+
+    /**
+     * 主办单位
+     */
+    String host;
+
+    /**
+     * 举办地点
+     */
+    String place;
+
+    /**
+     * 备注
+     */
+    String ps;
+
+    /**
+     * 举办时间
+     */
     Date time;
-    LocalDateTime createtime, updatetime;
+
+    /**
+     * 记录的创建时间
+     */
+    LocalDateTime createTime;
+
+    /**
+     * 记录的更新时间
+     */
+    LocalDateTime updateTime;
+
+    /**
+     * 记录是否被删除
+     */
     boolean delete;
 
 }

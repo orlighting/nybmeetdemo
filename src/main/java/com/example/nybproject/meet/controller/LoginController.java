@@ -14,6 +14,10 @@ import org.springframework.web.util.HtmlUtils;
 import javax.annotation.Resource;
 import java.util.Objects;
 
+//10.29 完成了用户部分的登录开发
+
+
+//登录控制
 @Controller
 public class LoginController {
 
@@ -25,7 +29,7 @@ public class LoginController {
     @ResponseBody
     public PostResult login(@RequestBody User user){
         Integer id = user.getId();
-        
+
         User resUser = userMapper.findsById(id);
         if(resUser == null) {
             return new PostResult(400);
@@ -34,7 +38,7 @@ public class LoginController {
             return new PostResult(200);
         }
         else{
-            return new PostResult(200);
+            return new PostResult(400);
         }
     }
 
