@@ -4,7 +4,6 @@ package com.example.nybproject.meet.pojo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 //简易申报类

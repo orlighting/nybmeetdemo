@@ -2,7 +2,7 @@ package com.example.nybproject.meet.controller;
 
 import com.example.nybproject.meet.mapper.EasyMapper;
 import com.example.nybproject.meet.pojo.EasyMeet;
-import com.example.nybproject.meet.result.PostResult;
+import com.example.nybproject.meet.result.HttpResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +23,7 @@ public class EasyController {
     @CrossOrigin
     @PostMapping("api/easy")
     @ResponseBody
-    public PostResult easy(@RequestBody EasyMeet easyMeet){
+    public HttpResult easy(@RequestBody EasyMeet easyMeet) {
 
         EasyMeet tempeasy = easyMeet;
 
@@ -33,11 +33,11 @@ public class EasyController {
         easyMeet.setUpdateTime(LocalDateTime.now());
         easyMeet.setCheckState(0);
 
-        if(easyMapper.add(tempeasy)==1){
-            return new PostResult(200);
+        if (easyMapper.add(tempeasy) == 1) {
+            return HttpResult.of();
         }
 
-        return new PostResult(400);
+        return HttpResult.of(400);
 
     }
 

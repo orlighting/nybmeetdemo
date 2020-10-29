@@ -7,6 +7,7 @@ import java.util.List;
 public interface UserMapper {
 
     User findsById(Integer id);
+
     User findToCheck(Integer id, String password);
 
     List<User> findAll();
