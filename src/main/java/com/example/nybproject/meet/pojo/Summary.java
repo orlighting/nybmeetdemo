@@ -72,6 +72,6 @@ public class Summary {
     /**
      * 记录是否被删除
      */
-    boolean delete;
+    Boolean delete;
 
 }

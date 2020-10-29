@@ -59,7 +59,7 @@ public class EasyMeet {
     /**
      * 举办时间
      */
-    Date time;
+    LocalDateTime time;
 
     /**
      * 记录的创建时间
@@ -74,6 +74,6 @@ public class EasyMeet {
     /**
      * 记录是否被删除
      */
-    boolean delete;
+    Boolean delete;
 
 }

@@ -111,7 +111,7 @@ public class DetailMeet {
     /**
      * 举办时间
      */
-    Date time;
+    LocalDateTime time;
 
     /**
      * 记录创建时间
@@ -126,27 +126,27 @@ public class DetailMeet {
     /**
      * 是否有采购商参加
      */
-    boolean view1;
+    Boolean view1;
 
     /**
      * 是否有消费者参加
      */
-    boolean view2;
+    Boolean view2;
 
     /**
      * 是否有党和国家领导人出席
      */
-    boolean leaderD;
+    Boolean leaderD;
 
     /**
      * 是否邀请境外部级以上政要出席
      */
-    boolean leaderF;
+    Boolean leaderF;
 
 
     /**
      * 该记录是否被删除
      */
-    boolean delete;
+    Boolean delete;
 
 }

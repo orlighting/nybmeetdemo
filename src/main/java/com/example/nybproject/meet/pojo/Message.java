@@ -47,11 +47,11 @@ public class Message {
     /**
      * 消息是否被浏览
      */
-    boolean looked;
+    Boolean looked;
 
     /**
      * 记录是否被删除
      */
-    boolean delete;
+    Boolean delete;
 
 }

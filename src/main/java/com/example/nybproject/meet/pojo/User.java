@@ -78,6 +78,6 @@ public class User {
     /**
      * 记录是否被删除
      */
-    boolean delete;
+    Boolean delete;
 
 }

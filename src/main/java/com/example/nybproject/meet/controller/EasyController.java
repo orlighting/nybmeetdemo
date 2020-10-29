@@ -29,9 +29,9 @@ public class EasyController {
 
         easyMeet.setId(123123123);
         easyMeet.setDelete(false);
-        easyMeet.setCreatetime(LocalDateTime.now());
-        easyMeet.setUpdatetime(LocalDateTime.now());
-        easyMeet.setCheckstate(0);
+        easyMeet.setCreateTime(LocalDateTime.now());
+        easyMeet.setUpdateTime(LocalDateTime.now());
+        easyMeet.setCheckState(0);
 
         if(easyMapper.add(tempeasy)==1){
             return new PostResult(200);
