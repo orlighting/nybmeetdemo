@@ -4,74 +4,75 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 总结报告类
+ */
 @Data
-
-//总结报告类
 public class Summary {
 
     /**
      * 本总结的id
      */
-    Integer id;
+    private Integer id;
 
     /**
      * 总结申请用户的id
      */
-    Integer userId;
+    private Integer userId;
 
     /**
      * 审核本总结管理员的id（目前不需要审核，先放着）
      */
-    Integer adminId;
+    private Integer adminId;
 
     /**
      * 总结类型（事业单位提交[0]，省部级提交[1]，涉外展会负责单位提交[2]）
      */
-    Integer kind;
+    private Integer kind;
 
     /**
      * 参展国家地区数量
      */
-    Integer countryNum;
+    private Integer countryNum;
 
     /**
      * 参展商数量
      */
-    Integer conpanyNum;
+    private Integer companyNum;
 
     /**
      * 展会面积
      */
-    Integer area;
+    private Integer area;
 
     /**
      * 展会商数量
      */
-    Integer buyerNum;
+    private Integer buyerNum;
 
     /**
      * 参展媒体数
      */
-    Integer mediaNum;
+    private Integer mediaNum;
 
     /**
      * 最终成交额
      */
-    Integer turnover;
+    private Integer turnover;
 
     /**
      * 记录创建时间
      */
-    LocalDateTime createTime;
+    private LocalDateTime createTime;
 
     /**
      * 记录更新时间
      */
-    LocalDateTime updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 记录是否被删除
      */
-    Boolean delete;
+    private Boolean delete;
 
 }

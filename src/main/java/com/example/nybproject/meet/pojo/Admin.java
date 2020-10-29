@@ -5,43 +5,45 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 
-//管理员类
+/**
+ * 管理员类
+ */
 @Data
 public class Admin {
 
     /**
      * 管理员的id
      */
-    Integer id;
+    private Integer id;
 
     /**
      * 管理员密码
      */
-    String password;
+    private String password;
 
     /**
      * 电话号码
      */
-    String teleNum;
+    private String teleNum;
 
     /**
      * 部门
      */
-    String department;
+    private String department;
 
     /**
      * 身份证号
      */
-    String identityNum;
+    private String identityNum;
 
     /**
      * 记录的创建时间
      */
-    LocalDateTime createTime;
+    private LocalDateTime createTime;
 
     /**
      * 记录的更新时间
      */
-    LocalDateTime updateTime;
+    private LocalDateTime updateTime;
 
 }

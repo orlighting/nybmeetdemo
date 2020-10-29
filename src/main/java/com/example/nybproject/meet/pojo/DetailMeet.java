@@ -10,142 +10,142 @@ public class DetailMeet {
     /**
      * 本详细申报的id
      */
-    Integer id;
+    private Integer id;
 
     /**
      * 提交该表单的用户的id
      */
-    Integer userId;
+    private Integer userId;
 
     /**
      * 审核该表单的管理员的id
      */
-    Integer adminId;
+    private Integer adminId;
 
     /**
      * 财政资金的拨款金额
      */
-    Integer finanFund;
+    private Integer finanFund;
 
     /**
      * 其他来源的拨款金额
      */
-    Integer otherFund;
+    private Integer otherFund;
 
     /**
      * 目前展会计划的审核状态（审核中[0]、“已通过，展会计划待过会”[1]、“已通过，展会计划已印发”[2]、"未通过，重新提交"[3]）
      */
-    Integer checkState;
+    private Integer checkState;
 
     /**
      * 展会面积
      */
-    Integer area;
+    private Integer area;
 
     /**
      * 国内参展商所占比例（单位：%）
      */
-    Integer domestic;
+    private Integer domestic;
 
     /**
      * 国外参展商所占比例（单位：%）
      */
-    Integer foreign;
+    private Integer foreign;
 
     /**
      * 展会名称
      */
-    String name;
+    private String name;
 
     /**
      * 主办单位
      */
-    String hostComp;
+    private String hostComp;
 
     /**
      * 承办单位
      */
-    String fundComp;
+    private String fundComp;
 
     /**
      * 批准单位
      */
-    String authObj;
+    private String authObj;
 
     /**
      * 批准文案
      */
-    String authNum;
+    private String authNum;
 
     /**
      * 举办地点
      */
-    String place;
+    private String place;
 
     /**
      * 举办周期
      */
-    String cycle;
+    private String cycle;
 
     /**
      * 展会内容
      */
-    String content;
+    private String content;
 
     /**
      * 财政资金的拨款单位
      */
-    String finanFrom;
+    private String finanFrom;
 
     /**
      * 其他资金的资金来源
      */
-    String otherFrom;
+    private String otherFrom;
 
     /**
      * 展会内容简述
      */
-    String declare;
+    private String declare;
 
     /**
      * 举办时间
      */
-    LocalDateTime time;
+    private LocalDateTime time;
 
     /**
      * 记录创建时间
      */
-    LocalDateTime createTime;
+    private LocalDateTime createTime;
 
     /**
      * 记录更新时间
      */
-    LocalDateTime updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 是否有采购商参加
      */
-    Boolean view1;
+    private Boolean view1;
 
     /**
      * 是否有消费者参加
      */
-    Boolean view2;
+    private Boolean view2;
 
     /**
      * 是否有党和国家领导人出席
      */
-    Boolean leaderD;
+    private Boolean leaderD;
 
     /**
      * 是否邀请境外部级以上政要出席
      */
-    Boolean leaderF;
+    private Boolean leaderF;
 
 
     /**
      * 该记录是否被删除
      */
-    Boolean delete;
+    private Boolean delete;
 
 }
