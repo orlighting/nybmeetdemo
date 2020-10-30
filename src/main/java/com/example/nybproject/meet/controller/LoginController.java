@@ -25,7 +25,7 @@ public class LoginController {
     @CrossOrigin
     @PostMapping("api/login")
     @ResponseBody
-    public HttpResult login(@RequestBody User user) {
+    public HttpResult<Void> login(@RequestBody User user) {
         Integer id = user.getId();
 
         User resUser = userMapper.findsById(id);

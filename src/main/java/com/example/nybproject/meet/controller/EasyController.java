@@ -25,7 +25,7 @@ public class EasyController {
     @CrossOrigin
     @PostMapping("api/easy")
     @ResponseBody
-    public HttpResult easy(@RequestBody EasyMeet easyMeet) {
+    public HttpResult<Void> easy(@RequestBody EasyMeet easyMeet) {
 
         easyMeet.setId(123123123);
         easyMeet.setDelete(false);

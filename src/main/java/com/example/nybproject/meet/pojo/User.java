@@ -25,7 +25,7 @@ public class User {
     /**
      * 用户账号审核状态（未审核[0]、已通过[1]、未通过[2]）
      */
-    private Integer checkstate;
+    private Integer checkState;
 
     /**
      * 用户密码
