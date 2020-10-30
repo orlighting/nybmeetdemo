@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nybproject.meet.mapper.MessageMapper">
+    <resultMap id="MessageMap" type="com.example.nybproject.meet.pojo.Message" >
+        <result column="id" property="id" />
+        <result column="admin_id" property="adminId" />
+        <result column="user_id" property="userId" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="looked" property="looked" />
+        <result column="delete" property="delete" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+    <select id="findsById" resultMap="MessageMap">
+        select * from message where id = #{id}
+    </select>
+
+    <select id="findByUserId" resultMap="MessageMap">
+        select * from message where user_id = #{userId}
+    </select>
+
+
+</mapper>
