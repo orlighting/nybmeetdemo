@@ -11,9 +11,6 @@ import java.io.Serializable;
 @Data
 public final class HttpResult<T> implements Serializable {
 
-    private static final int SUCCESS_CODE = 200;
-    private static final String SUCCESS_MSG = "success";
-
     private final int code;
     private final String msg;
     private final T data;
@@ -25,11 +22,11 @@ public final class HttpResult<T> implements Serializable {
     }
 
     public static <Result> HttpResult<Result> of() {
-        return new HttpResult<>(SUCCESS_CODE, SUCCESS_MSG, null);
+        return new HttpResult<>(HttpResultCodeEnum.SUCCESS.getCode(), HttpResultCodeEnum.SUCCESS.getMsg(), null);
     }
 
-    public static <Result> HttpResult<Result> of(Result data) {
-        return new HttpResult<>(SUCCESS_CODE, SUCCESS_MSG, data);
+    public static <Result> HttpResult<Result> of(HttpResultCodeEnum result) {
+        return new HttpResult<>(result.getCode(), result.getMsg(), null);
     }
 
     public static <Result> HttpResult<Result> of(int code) {
