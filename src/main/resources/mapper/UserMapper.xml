@@ -28,4 +28,7 @@
     <select id="findForCheck" resultMap="UserMap">
         select * from user where id = #{id} and password = #{password}
     </select>
+    <select id="findNewId">
+        select max(id) from user
+    </select>
 </mapper>

@@ -8,7 +8,7 @@ public interface UserMapper {
 
     User findsById(Integer id);
 
-    User findToCheck(Integer id, String password);
+    Integer findNewId();
 
     List<User> findAll();
 

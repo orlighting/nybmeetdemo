@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nybproject.meet.mapper.AdminMapper">
+    <resultMap id="AdminMap" type="com.example.nybproject.meet.pojo.Admin" >
+        <result column="id" property="id" />
+        <result column="password" property="password" />
+        <result column="tele_num" property="teleNum" />
+        <result column="department" property="department" />
+        <result column="identity_card" property="identityCard" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+    <select id="findsById" resultMap="AdminMap">
+        select * from admin where id = #{id}
+    </select>
+    <select id="findAll" resultMap="AdminMap">
+        select * from admin
+    </select>
+
+</mapper>
