@@ -26,9 +26,23 @@ public enum HttpResultCodeEnum {
     ACCOUNT_REGISTER_ID_CARD_REPEAT(3001,"身份证号已被注册"),
     ACCOUNT_REGISTER_MOBILE_REPEAT(3002,"手机号已被注册"),
     /**
-     * TODO　待补充完整
+     * 审核相关
      */
+    NONE_REGISTER_TO_CHECK(4001, "没有待审核的注册信息"),
+    NONE_EASY_MEET_TO_CHECK(4002, "没有待审核的简易申报"),
+    NONE_DETAIL_MEET_TO_CHECK(4003, "没有待审核的详细申报"),
+    /**
+     * 信息系统相关
+     */
+    NONE_LOOKED_MESSAGE(5001,"该用户没有已读信息"),
+    NONE_NOT_LOOK_MESSAGE(5001,"该用户没有未读信息"),
+
+    /**
+     * TODO 待进一步完善
+     */
+
     ;
+
 
     /**
      * 错误码
