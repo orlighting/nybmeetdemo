@@ -8,4 +8,5 @@ public interface MessageMapper {
 
     Message findById(Integer id);
     List<Message> findByUserId(Integer userId);
+    Integer findNewId();
 }

@@ -6,4 +6,5 @@ public interface DetailMapper {
 
     int add(DetailMeet detailMeet);
 
+    Integer findNewId();
 }

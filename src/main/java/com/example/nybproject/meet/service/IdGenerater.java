@@ -1,13 +1,12 @@
 package com.example.nybproject.meet.service;
 
-import com.example.nybproject.meet.mapper.UserMapper;
-import lombok.Data;
+import com.example.nybproject.meet.mapper.*;
+import com.example.nybproject.meet.pojo.DetailMeet;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
-@Data
 public class IdGenerater {
 
     /**
@@ -36,10 +35,38 @@ public class IdGenerater {
     private Integer summaryIdNow;
 
     @Resource
+    EasyMapper easyMapper;
+    @Resource
+    DetailMapper detailMapper;
+    @Resource
     UserMapper userMapper;
+    @Resource
+    MessageMapper messageMapper;
+    @Resource
+    SummaryMapper summaryMapper;
 
-    Integer getNewEasyMeetId(){
+    Integer getEasyMeetIdNow(){
 
+        if(easyMeetIdNow == null){
+            easyMeetIdNow = easyMapper.findNewId();
+        }
+
+        easyMeetIdNow++;
+
+        return easyMeetIdNow;
+    }
+
+    Integer getDetailMeetIdNow(){
+        if(detailMeetIdNow == null){
+            detailMeetIdNow = detailMapper.findNewId();
+        }
+
+        detailMeetIdNow++;
+
+        return detailMeetIdNow;
+    }
+
+    Integer getUserIdNow(){
         if(userIdNow == null){
             userIdNow = userMapper.findNewId();
         }
@@ -48,5 +75,26 @@ public class IdGenerater {
 
         return userIdNow;
     }
+
+    Integer getMessageIdNow(){
+        if(messageIdNow == null){
+            messageIdNow = messageMapper.findNewId();
+        }
+
+        messageIdNow++;
+
+        return messageIdNow;
+    }
+
+    Integer getSummaryIdNow(){
+        if(summaryIdNow == null){
+            summaryIdNow = summaryMapper.findNewId();
+        }
+
+        summaryIdNow++;
+
+        return summaryIdNow;
+    }
+
 
 }

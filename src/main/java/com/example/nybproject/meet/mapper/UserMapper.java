@@ -7,9 +7,7 @@ import java.util.List;
 public interface UserMapper {
 
     User findsById(Integer id);
-
     Integer findNewId();
-
     List<User> findAll();
 
 }

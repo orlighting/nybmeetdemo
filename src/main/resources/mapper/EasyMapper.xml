@@ -22,4 +22,8 @@
         insert into easymeet (id, dmeet_id, user_id, admin_id, name, host, time, place, ps, check_state, delete, create_time, update_time)
         values (#{id}, #{dmeetId}, #{userId}, #{adminId}, #{name}, #{host}, #{time}, #{place}, #{ps}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
+
+    <select id="findNewId">
+        select max(id) from easymeet
+    </select>
 </mapper>

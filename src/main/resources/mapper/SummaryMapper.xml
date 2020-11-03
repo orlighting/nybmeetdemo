@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nybproject.meet.mapper.SummaryMapper">
+    <resultMap id="SummaryMap" type="com.example.nybproject.meet.pojo.Summary" >
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="admin_id" property="adminId" />
+        <result column="kind" property="kind" />
+        <result column="country_num" property="countryNum" />
+        <result column="company_num" property="companyNum" />
+        <result column="area" property="area" />
+        <result column="buyer_num" property="buyerNum" />
+        <result column="media_num" property="mediaNum" />
+        <result column="turnover" property="turnover" />
+        <result column="delete" property="delete" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+    <select id="findsById" resultMap="SummaryMap">
+        select * from summary where id = #{id}
+    </select>
+    <select id="findNewId">
+        select max(id) from summary
+    </select>
+</mapper>
