@@ -45,7 +45,8 @@ public class IdGenerater {
     @Resource
     SummaryMapper summaryMapper;
 
-    Integer getEasyMeetIdNow(){
+
+    public Integer getEasyMeetIdNow(){
 
         if(easyMeetIdNow == null){
             easyMeetIdNow = easyMapper.findNewId();

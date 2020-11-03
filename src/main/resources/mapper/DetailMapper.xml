@@ -37,7 +37,7 @@
     </resultMap>
     <insert id="add">
         insert into detailmeet (id, user_id, admin_id, name, host_comp, fund_comp, auth_obj, auth_num, place, cycle, time, area, domestic, foreign, content, view1,
-        view2, finan_from, finan_fund, other_from, other_fund, leader_d, leader_f, declare, check_state, delete, create_time, update_time)
+        view2, finan_from, finan_fund, other_from, other_fund, leader_d, leader_f, declare, check_state, `delete`, create_time, update_time)
         values (#{id}, #{userId}, #{adminId}, #{name}, #{hostComp}, #{fundComp}, #{authObj}, #{authNum}, #{place}, #{cycle}, #{time}, #{area}, #{domestic}, #{foreign}, #{content}, #{view1},
          #{view2}, #{finanFrom}, #{finanFund}, #{otherFrom}, #{otherFund}, #{leaderD}, #{declare}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
