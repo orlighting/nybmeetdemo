@@ -21,6 +21,8 @@
         <result column="content" property="content" />
         <result column="view1" property="view1" />
         <result column="view2" property="view2" />
+        <result column="pre_expo_file_id" property="preExpoFileId" />
+        <result column="investment_plan_file_id" property="investmentPlanFileId" />
         <result column="finan_from" property="finanFrom" />
         <result column="finan_fund" property="finanFund" />
         <result column="other_from" property="otherFrom" />

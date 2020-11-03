@@ -108,6 +108,16 @@ public class DetailMeet {
     private String declare;
 
     /**
+     * 往届展会情况文档id
+     */
+    private String preExpoFileId;
+
+    /**
+     * 招商方案文档id
+     */
+    private String investmentPlanFileId;
+
+    /**
      * 举办时间
      */
     private LocalDateTime time;
