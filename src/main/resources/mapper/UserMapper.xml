@@ -35,5 +35,11 @@
         insert into user (id, name, password, tele_num, company, department, email, portraiture, identity_card, kind, check_state, `delete`, create_time, update_time)
         values (#{id}, #{name}, #{password}, #{teleNum}, #{company}, #{department}, #{email}, #{portraiture}, #{identityCard}, #{kind}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
+    <select id="findsByIdentityCard" resultType="java.lang.Integer">
+        select id from user where identity_card = #{identityCard}
+    </select>
+    <select id="findsByTeleNum" resultType="java.lang.Integer">
+        select id from user where tele_num = #{teleNum}
+    </select>
 
 </mapper>

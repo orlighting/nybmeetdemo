@@ -5,6 +5,7 @@ import com.example.nybproject.meet.mapper.UserMapper;
 import com.example.nybproject.meet.pojo.Admin;
 import com.example.nybproject.meet.pojo.User;
 import com.example.nybproject.meet.result.HttpResult;
+import com.example.nybproject.meet.result.HttpResultCodeEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,11 +52,11 @@ public class LoginController {
         Admin resAdmin = adminMapper.findsById(id);
 
         if (resAdmin == null) {
-            return HttpResult.of(400);
+            return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         } else if (Objects.equals(resAdmin.getPassword(), admin.getPassword())) {
             return HttpResult.of();
         } else {
-            return HttpResult.of(400);
+            return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         }
     }
 

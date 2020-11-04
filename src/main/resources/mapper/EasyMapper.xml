@@ -23,13 +23,13 @@
         values (#{id}, #{dmeetId}, #{userId}, #{adminId}, #{name}, #{host}, #{time}, #{place}, #{ps}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
     <select id="findAllNotCheckEasy" resultMap="EasyMeetMap">
-        select * from easymeet where check_state = 0 and delete = 0
+        select * from easymeet where check_state = 0 and `delete` = false
     </select>
     <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from easymeet
     </select>
     <update id="checkEasyMeet">
-        update easymeet set check_state = #{checkState}, admin_id = #{adminId} where id = #{id}
+        update easymeet set check_state = #{checkState}, admin_id = #{adminId}, update_time = #{updateTime} where id = #{id}
     </update>
     <select id="findById" resultMap="EasyMeetMap">
         select * from easymeet where id = #{id}

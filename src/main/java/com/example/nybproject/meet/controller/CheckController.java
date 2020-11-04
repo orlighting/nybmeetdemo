@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import sun.awt.geom.AreaOp;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * 管理员审核控制
- * 11.4 完成简易审核拉取部分的内容
+ * 11.4 完成简易审核拉取部分的内容，完成简易申报审核加结果入库的内容
  */
 
 @Controller
@@ -44,15 +45,11 @@ public class CheckController {
     @PostMapping("/easy")
     @ResponseBody
     public HttpResult<Void> easycheck(@RequestBody EasyMeet easyMeet){
-//        System.out.println(easyMeet.getAdminId());
-//        System.out.println(easyMeet.getId());
-//        System.out.println(easyMeet.getCheckState());
 
-        /**
-         * TODO 与前端测试是否可以正常运行
-         */
 
-        if(easyMapper.checkEasyMeet(easyMeet.getId(),easyMeet.getCheckState(),easyMeet.getAdminId())==1){
+        easyMeet.setUpdateTime(LocalDateTime.now());
+
+        if(easyMapper.checkEasyMeet(easyMeet.getId(), easyMeet.getCheckState(), easyMeet.getAdminId(), easyMeet.getUpdateTime())==1){
             return HttpResult.of();
         }
 
