@@ -10,4 +10,6 @@ public interface UserMapper {
     Integer findNewId();
     List<User> findAll();
 
+    int add(User user);
+
 }

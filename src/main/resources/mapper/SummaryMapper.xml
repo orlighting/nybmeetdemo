@@ -21,7 +21,7 @@
     <select id="findsById" resultMap="SummaryMap">
         select * from summary where id = #{id}
     </select>
-    <select id="findNewId">
+    <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from summary
     </select>
 </mapper>

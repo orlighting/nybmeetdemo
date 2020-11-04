@@ -4,6 +4,7 @@ package com.example.nybproject.meet.pojo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 /**
@@ -60,7 +61,7 @@ public class EasyMeet {
     /**
      * 举办时间
      */
-    private LocalDateTime time;
+    private Date time;
 
     /**
      * 记录的创建时间
