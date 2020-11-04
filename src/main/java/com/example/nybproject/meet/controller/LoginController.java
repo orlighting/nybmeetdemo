@@ -48,7 +48,7 @@ public class LoginController {
 
         Integer id = admin.getId();
 
-        Admin resAdmin = adminMapper.findById(id);
+        Admin resAdmin = adminMapper.findsById(id);
 
         if (resAdmin == null) {
             return HttpResult.of(400);

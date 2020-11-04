@@ -4,5 +4,5 @@ import com.example.nybproject.meet.pojo.Admin;
 
 public interface AdminMapper {
 
-    Admin findById(Integer id);
+    Admin findsById(Integer id);
 }
