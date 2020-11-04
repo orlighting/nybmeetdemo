@@ -42,7 +42,7 @@
          #{view2}, #{finanFrom}, #{finanFund}, #{otherFrom}, #{otherFund}, #{leaderD}, #{declare}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
 
-    <select id="findNewId">
+    <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from detailmeet
     </select>
 </mapper>

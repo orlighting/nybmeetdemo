@@ -22,7 +22,7 @@
         select * from message where user_id = #{userId}
     </select>
 
-    <select id="findNewId">
+    <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from message
     </select>
 
