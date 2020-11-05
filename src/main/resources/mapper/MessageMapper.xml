@@ -17,13 +17,18 @@
     <select id="findsById" resultMap="MessageMap">
         select * from message where id = #{id}
     </select>
-
-    <select id="findByUserId" resultMap="MessageMap">
-        select * from message where user_id = #{userId}
-    </select>
-
+    <insert id="add">
+        insert into message (id, admin_id, user_id, title, content, looked, `delete`, create_time, update_time)
+        values (#{id}, #{adminId}, #{userId}, #{title}, #{content}, #{looked}, #{delete}, #{createTime}, #{updateTime})
+    </insert>
     <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from message
+    </select>
+    <select id="findsLookedMessage" resultMap="MessageMap">
+        select * from message where user_id = #{userId} and looked = true
+    </select>
+    <select id="findsNotLookMessage" resultMap="MessageMap">
+        select * from message where user_id = #{userId} and looked = false
     </select>
 
 </mapper>

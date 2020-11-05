@@ -40,10 +40,22 @@ public class HandinController {
     @Resource
     private GridFsTemplate gridFsTemplate;
 
+    /**
+     * @param easyMeet
+     * @return 用户提交简易申报的接口，先判断其详细申报id是否正确，是否对应正确的详细申报，之后入库
+     */
     @CrossOrigin
     @PostMapping("/easy")
     @ResponseBody
     public HttpResult<Void> easy(@RequestBody EasyMeet easyMeet) {
+
+        DetailMeet detailMeet = detailMapper.findsById(easyMeet.getDmeetId());
+        if (detailMeet == null) {
+            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
+        }
+        if (detailMeet.getUserId() != easyMeet.getUserId()) {
+            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
+        }
 
         easyMeet.setId(idGenerater.getEasyMeetIdNow());
         easyMeet.setAdminId(0);

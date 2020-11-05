@@ -35,7 +35,13 @@ public enum HttpResultCodeEnum {
      * 信息系统相关
      */
     NONE_LOOKED_MESSAGE(5001,"该用户没有已读信息"),
-    NONE_NOT_LOOK_MESSAGE(5001,"该用户没有未读信息"),
+    NONE_NOT_LOOK_MESSAGE(5002,"该用户没有未读信息"),
+    NONE_EASY_MEET_MESSAGE(5003,"该用户没有简易申报信息"),
+    NONE_DETAIL_MEET_MESSAGE(5004,"该用户没有详细申报信息"),
+    /**
+     * 其他
+     */
+    NONE_DETAIL_MEET_ACCESS(6001, "没有与之对应的详细申报")
 
     /**
      * TODO 待进一步完善
