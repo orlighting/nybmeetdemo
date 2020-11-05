@@ -41,8 +41,13 @@
         values (#{id}, #{userId}, #{adminId}, #{name}, #{hostComp}, #{fundComp}, #{authObj}, #{authNum}, #{place}, #{cycle}, #{time}, #{area}, #{domestic}, #{foreign}, #{content}, #{view1},
          #{view2}, #{finanFrom}, #{finanFund}, #{otherFrom}, #{otherFund}, #{leaderD}, #{declare}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
-
+    <select id="findsById" resultMap="DetailMeetMap">
+        select * from detailmeet where id = #{id}
+    </select>
     <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from detailmeet
+    </select>
+    <select id="findsByUserId" resultMap="DetailMeetMap">
+        select * from detailmeet where user_id = #{userId} and `delete` = false
     </select>
 </mapper>

@@ -34,4 +34,7 @@
     <select id="findById" resultMap="EasyMeetMap">
         select * from easymeet where id = #{id}
     </select>
+    <select id="findsByUserId" resultMap="EasyMeetMap">
+        select * from easymeet where user_id = #{userId} and `delete` = false
+    </select>
 </mapper>

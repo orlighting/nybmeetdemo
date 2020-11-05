@@ -7,12 +7,15 @@ import java.util.List;
 
 public interface UserMapper {
 
+    int add(User user);
+
     User findsById(Integer id);
-    Integer findNewId();
     List<User> findAll();
     Integer findsByIdentityCard(String identityCard);
     Integer findsByTeleNum(String teleNum);
 
-    int add(User user);
+    Integer findNewId();
+
+
 
 }

@@ -6,7 +6,11 @@ import java.util.List;
 
 public interface MessageMapper {
 
-    Message findById(Integer id);
-    List<Message> findByUserId(Integer userId);
+    int add(Message message);
+
+    Message findsById(Integer id);
+    List<Message> findsLookedMessage(Integer userId);
+    List<Message> findsNotLookMessage(Integer userId);
+
     Integer findNewId();
 }
