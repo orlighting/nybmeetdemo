@@ -12,6 +12,11 @@ import java.time.LocalDateTime;
 public class ResDetailMeet {
 
     /**
+     * 本详细申报的id
+     */
+    private Integer id;
+
+    /**
      * 提交该表单的用户的id
      */
     private Integer userId;

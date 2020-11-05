@@ -57,7 +57,7 @@ public class IdGenerater {
         return easyMeetIdNow;
     }
 
-    Integer getDetailMeetIdNow(){
+    public Integer getDetailMeetIdNow(){
         if(detailMeetIdNow == null){
             detailMeetIdNow = detailMapper.findNewId();
         }
@@ -67,7 +67,7 @@ public class IdGenerater {
         return detailMeetIdNow;
     }
 
-    Integer getUserIdNow(){
+    public Integer getUserIdNow(){
         if(userIdNow == null){
             userIdNow = userMapper.findNewId();
         }
@@ -77,7 +77,7 @@ public class IdGenerater {
         return userIdNow;
     }
 
-    Integer getMessageIdNow(){
+    public Integer getMessageIdNow(){
         if(messageIdNow == null){
             messageIdNow = messageMapper.findNewId();
         }
@@ -87,7 +87,7 @@ public class IdGenerater {
         return messageIdNow;
     }
 
-    Integer getSummaryIdNow(){
+    public Integer getSummaryIdNow(){
         if(summaryIdNow == null){
             summaryIdNow = summaryMapper.findNewId();
         }

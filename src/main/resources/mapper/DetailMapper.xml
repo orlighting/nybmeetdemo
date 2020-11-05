@@ -36,10 +36,10 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
     <insert id="add">
-        insert into detailmeet (id, user_id, admin_id, name, host_comp, fund_comp, auth_obj, auth_num, place, cycle, time, area, domestic, foreign, content, view1,
-        view2, finan_from, finan_fund, other_from, other_fund, leader_d, leader_f, declare, check_state, `delete`, create_time, update_time)
+        insert into detailmeet (id, user_id, admin_id, `name`, host_comp, fund_comp, auth_obj, auth_num, place, `cycle`, `time`, area, domestic, `foreign`, content, view1,
+        view2, pre_expo_file_id, investment_plan_file_id, finan_from, finan_fund, other_from, other_fund, leader_d, leader_f, `declare`, check_state, `delete`, create_time, update_time)
         values (#{id}, #{userId}, #{adminId}, #{name}, #{hostComp}, #{fundComp}, #{authObj}, #{authNum}, #{place}, #{cycle}, #{time}, #{area}, #{domestic}, #{foreign}, #{content}, #{view1},
-         #{view2}, #{finanFrom}, #{finanFund}, #{otherFrom}, #{otherFund}, #{leaderD}, #{declare}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
+         #{view2}, #{preExpoFileId}, #{investmentPlanFileId}, #{finanFrom}, #{finanFund}, #{otherFrom}, #{otherFund}, #{leaderD}, #{leaderD}, #{declare}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
 
     <select id="findNewId" resultType="java.lang.Integer">
