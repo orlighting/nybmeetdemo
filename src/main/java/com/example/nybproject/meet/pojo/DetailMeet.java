@@ -1,12 +1,15 @@
 package com.example.nybproject.meet.pojo;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class DetailMeet {
 
     /**
@@ -122,7 +125,7 @@ public class DetailMeet {
     /**
      * 举办时间
      */
-    private LocalDateTime time;
+    private Date time;
 
     /**
      * 记录创建时间
@@ -153,7 +156,6 @@ public class DetailMeet {
      * 是否邀请境外部级以上政要出席
      */
     private Boolean leaderF;
-
 
     /**
      * 该记录是否被删除

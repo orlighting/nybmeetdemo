@@ -1,7 +1,7 @@
 package com.example.nybproject.meet.pojo;
 
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -11,6 +11,10 @@ import java.util.Date;
  * 简易申报类
  */
 @Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class EasyMeet {
 
     /**

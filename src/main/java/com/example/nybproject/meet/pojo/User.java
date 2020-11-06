@@ -1,7 +1,7 @@
 package com.example.nybproject.meet.pojo;
 
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +10,10 @@ import java.time.LocalDateTime;
  * 用户类
  */
 @Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     /**

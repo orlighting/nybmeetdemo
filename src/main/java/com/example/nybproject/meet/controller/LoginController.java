@@ -34,11 +34,11 @@ public class LoginController {
 
         User resUser = userMapper.findsById(id);
         if (resUser == null) {
-            return HttpResult.of(400);
+            return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         } else if (Objects.equals(resUser.getPassword(), user.getPassword())) {
             return HttpResult.of();
         } else {
-            return HttpResult.of(400);
+            return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         }
     }
 

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 详细申报，前后端交互使用
@@ -124,7 +125,7 @@ public class ResDetailMeet {
     /**
      * 举办时间
      */
-    private LocalDateTime time;
+    private String time;
 
     /**
      * 记录创建时间

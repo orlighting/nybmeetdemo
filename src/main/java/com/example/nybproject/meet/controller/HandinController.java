@@ -18,7 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 用户上报功能控制
@@ -53,7 +56,7 @@ public class HandinController {
         if (detailMeet == null) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
         }
-        if (detailMeet.getUserId() != easyMeet.getUserId()) {
+        if (detailMeet.getUserId() != easyMeet.getUserId() || detailMeet.getCheckState() != 2) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
         }
 
@@ -76,6 +79,11 @@ public class HandinController {
     @PostMapping("/detail")
     @ResponseBody
     public HttpResult<Void> detail(ResDetailMeet resDetailMeet) {
+
+
+
+        System.out.println(resDetailMeet.getArea());
+
         try {
             MultipartFile preExpoFile = resDetailMeet.getPreExpoFile();
             MultipartFile investmentPlanFile = resDetailMeet.getInvestmentPlanFile();
@@ -83,6 +91,11 @@ public class HandinController {
             resDetailMeet.setId(idGenerater.getDetailMeetIdNow());
             resDetailMeet.setPreExpoFileId(saveFileToMongo(preExpoFile));
             resDetailMeet.setInvestmentPlanFileId(saveFileToMongo(investmentPlanFile));
+            resDetailMeet.setCreateTime(LocalDateTime.now());
+            resDetailMeet.setUpdateTime(LocalDateTime.now());
+            resDetailMeet.setCheckState(0);
+            resDetailMeet.setDelete(false);
+
             detailMapper.add(convertResDetailMeetToDetailMeet(resDetailMeet));
             return HttpResult.of();
         } catch (Exception e) {
@@ -105,6 +118,16 @@ public class HandinController {
     }
 
     private DetailMeet convertResDetailMeetToDetailMeet(ResDetailMeet resDetailMeet) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//注意月份是MM
+        Date date = null;
+
+        try {
+            date = simpleDateFormat.parse(resDetailMeet.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         return DetailMeet.builder()
                 .id(resDetailMeet.getId())
                 .userId(resDetailMeet.getUserId())
@@ -128,7 +151,7 @@ public class HandinController {
                 .declare(resDetailMeet.getDeclare())
                 .preExpoFileId(resDetailMeet.getPreExpoFileId())
                 .investmentPlanFileId(resDetailMeet.getInvestmentPlanFileId())
-                .time(resDetailMeet.getTime())
+                .time(date)
                 .createTime(resDetailMeet.getCreateTime())
                 .updateTime(resDetailMeet.getUpdateTime())
                 .view1(resDetailMeet.getView1())

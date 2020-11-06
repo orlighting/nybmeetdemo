@@ -42,7 +42,7 @@
          #{view2}, #{preExpoFileId}, #{investmentPlanFileId}, #{finanFrom}, #{finanFund}, #{otherFrom}, #{otherFund}, #{leaderD}, #{leaderD}, #{declare}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
     </insert>
     <select id="findsById" resultMap="DetailMeetMap">
-        select * from detailmeet where id = #{id}
+        select * from detailmeet where id = #{id} and `delete` = false
     </select>
     <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from detailmeet

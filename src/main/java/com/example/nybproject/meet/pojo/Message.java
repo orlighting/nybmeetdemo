@@ -1,6 +1,6 @@
 package com.example.nybproject.meet.pojo;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
  * 消息类
  */
 @Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Message {
 
     /**

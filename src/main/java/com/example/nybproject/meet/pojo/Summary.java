@@ -1,6 +1,6 @@
 package com.example.nybproject.meet.pojo;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
  * 总结报告类
  */
 @Data
+@Builder
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Summary {
 
     /**
