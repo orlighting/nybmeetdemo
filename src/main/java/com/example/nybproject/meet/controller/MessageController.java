@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 消息系统控制
@@ -92,11 +93,30 @@ public class MessageController {
         List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
 
         if (resMessage != null) {
+            List<Integer> ids = resMessage.stream()
+                    .map(Message::getId)
+                    .collect(Collectors.toList());
+            messageMapper.updateNotLookMessageLooked(ids);
             return HttpResult.of(resMessage);
         }
 
         return HttpResult.of(HttpResultCodeEnum.NONE_NOT_LOOK_MESSAGE);
 
+    }
+
+    /**
+     * @param userId
+     * @return 向前端返回所有未读邮件的数量
+     */
+    @CrossOrigin
+    @RequestMapping("/notlookcount")
+    @ResponseBody
+    public HttpResult<Integer> notLookMessageCount(@RequestBody Integer userId) {
+        System.out.println(userId);
+
+        List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
+        int count = resMessage == null ? 0 : resMessage.size();
+        return HttpResult.of(count);
     }
 
     /**

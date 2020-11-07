@@ -14,5 +14,7 @@ public interface MessageMapper {
 
     List<Message> findsNotLookMessage(Integer userId);
 
+    int updateNotLookMessageLooked(List<Integer> ids);
+
     Integer findNewId();
 }

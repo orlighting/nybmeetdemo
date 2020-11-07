@@ -14,6 +14,7 @@
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
     </resultMap>
+
     <select id="findsById" resultMap="MessageMap">
         select * from message where id = #{id}
     </select>
@@ -30,5 +31,12 @@
     <select id="findsNotLookMessage" resultMap="MessageMap">
         select * from message where user_id = #{userId} and looked = false
     </select>
+
+    <update id="updateNotLookMessageLooked">
+        update message set looked = true where id in
+        <foreach item="item" collection="ids" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </update>
 
 </mapper>
