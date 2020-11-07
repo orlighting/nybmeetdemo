@@ -8,10 +8,6 @@ import java.time.LocalDateTime;
  * 总结报告类
  */
 @Data
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class Summary {
 
     /**

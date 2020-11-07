@@ -9,10 +9,6 @@ import java.time.LocalDateTime;
  * 消息类
  */
 @Data
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class Message {
 
     /**

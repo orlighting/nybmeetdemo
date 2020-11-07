@@ -10,10 +10,6 @@ import java.time.LocalDateTime;
  * 用户类
  */
 @Data
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
 
     /**

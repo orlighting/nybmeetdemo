@@ -11,10 +11,6 @@ import java.util.Date;
  * 简易申报类
  */
 @Data
-@Builder
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class EasyMeet {
 
     /**
