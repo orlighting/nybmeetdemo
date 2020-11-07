@@ -2,6 +2,7 @@ package com.example.nybproject.meet.pojo;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -124,7 +125,7 @@ public class DetailMeet {
     /**
      * 举办时间
      */
-    private Date time;
+    private LocalDate time;
 
     /**
      * 记录创建时间

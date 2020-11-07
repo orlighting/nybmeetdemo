@@ -20,10 +20,10 @@ import java.time.LocalDateTime;
 public class AccountController {
 
     @Resource
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Resource
-    IdGenerater idGenerater;
+    private IdGenerater idGenerater;
 
     /**
      * 用户注册接口
@@ -31,15 +31,15 @@ public class AccountController {
     @CrossOrigin
     @PostMapping("/register")
     @ResponseBody
-    public HttpResult<Void> userRegister(@RequestBody User user){
+    public HttpResult<Void> userRegister(@RequestBody User user) {
 
         System.out.println(user.getId());
         System.out.println(user.getPassword());
-        if(userMapper.findsByIdentityCard(user.getIdentityCard())!=null){
+        if (userMapper.findsByIdentityCard(user.getIdentityCard()) != null) {
             return HttpResult.of(HttpResultCodeEnum.ACCOUNT_REGISTER_ID_CARD_REPEAT);
         }
 
-        if(userMapper.findsByTeleNum(user.getTeleNum())!=null){
+        if (userMapper.findsByTeleNum(user.getTeleNum()) != null) {
             return HttpResult.of(HttpResultCodeEnum.ACCOUNT_REGISTER_MOBILE_REPEAT);
         }
 
@@ -49,7 +49,7 @@ public class AccountController {
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
 
-        if(userMapper.add(user)==1){
+        if (userMapper.add(user) == 1) {
             return HttpResult.of();
         }
 

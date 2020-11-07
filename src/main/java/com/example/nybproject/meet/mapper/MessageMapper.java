@@ -9,7 +9,9 @@ public interface MessageMapper {
     int add(Message message);
 
     Message findsById(Integer id);
+
     List<Message> findsLookedMessage(Integer userId);
+
     List<Message> findsNotLookMessage(Integer userId);
 
     Integer findNewId();

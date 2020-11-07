@@ -22,9 +22,9 @@ import java.util.Objects;
 public class LoginController {
 
     @Resource
-    UserMapper userMapper;
+    private UserMapper userMapper;
     @Resource
-    AdminMapper adminMapper;
+    private AdminMapper adminMapper;
 
     @CrossOrigin
     @PostMapping("/user")

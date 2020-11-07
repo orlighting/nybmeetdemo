@@ -25,6 +25,10 @@ public final class HttpResult<T> implements Serializable {
         return new HttpResult<>(HttpResultCodeEnum.SUCCESS.getCode(), HttpResultCodeEnum.SUCCESS.getMsg(), null);
     }
 
+    public static <Result> HttpResult<Result> of(Result data) {
+        return new HttpResult<>(HttpResultCodeEnum.SUCCESS.getCode(), HttpResultCodeEnum.SUCCESS.getMsg(), data);
+    }
+
     public static <Result> HttpResult<Result> of(HttpResultCodeEnum result) {
         return new HttpResult<>(result.getCode(), result.getMsg(), null);
     }

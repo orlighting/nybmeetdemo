@@ -18,10 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 用户上报功能控制
@@ -79,11 +78,6 @@ public class HandinController {
     @PostMapping("/detail")
     @ResponseBody
     public HttpResult<Void> detail(ResDetailMeet resDetailMeet) {
-
-
-
-        System.out.println(resDetailMeet.getArea());
-
         try {
             MultipartFile preExpoFile = resDetailMeet.getPreExpoFile();
             MultipartFile investmentPlanFile = resDetailMeet.getInvestmentPlanFile();
@@ -118,15 +112,7 @@ public class HandinController {
     }
 
     private DetailMeet convertResDetailMeetToDetailMeet(ResDetailMeet resDetailMeet) {
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//注意月份是MM
-        Date date = null;
-
-        try {
-            date = simpleDateFormat.parse(resDetailMeet.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        LocalDate date = LocalDate.parse(resDetailMeet.getTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         return DetailMeet.builder()
                 .id(resDetailMeet.getId())

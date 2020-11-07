@@ -26,25 +26,22 @@ import java.util.List;
 public class MessageController {
 
     @Resource
-    IdGenerater idGenerater;
-
+    private IdGenerater idGenerater;
     @Resource
-    MessageMapper messageMapper;
+    private MessageMapper messageMapper;
     @Resource
-    EasyMapper easyMapper;
+    private EasyMapper easyMapper;
     @Resource
-    DetailMapper detailMapper;
+    private DetailMapper detailMapper;
 
     /**
      * @param message
-     * @return
-     *
-     * 接收前端发来的推送消息，并入库
+     * @return 接收前端发来的推送消息，并入库
      */
     @CrossOrigin
     @PostMapping("/send")
     @ResponseBody
-    public HttpResult<Void> sendMessage(@RequestBody Message message){
+    public HttpResult<Void> sendMessage(@RequestBody Message message) {
 
         message.setId(idGenerater.getMessageIdNow());
         message.setCreateTime(LocalDateTime.now());
@@ -52,7 +49,7 @@ public class MessageController {
         message.setDelete(false);
         message.setLooked(false);
 
-        if(messageMapper.add(message)==1){
+        if (messageMapper.add(message) == 1) {
             return HttpResult.of();
         }
 
@@ -62,21 +59,19 @@ public class MessageController {
 
     /**
      * @param userId
-     * @return
-     *
-     * 向前端返回所有已读邮件
+     * @return 向前端返回所有已读邮件
      */
     @CrossOrigin
     @RequestMapping("/looked")
     @ResponseBody
-    public HttpResult<List<Message>> lookedMessage(@RequestBody Integer userId){
+    public HttpResult<List<Message>> lookedMessage(@RequestBody Integer userId) {
 
         System.out.println(userId);
 
         List<Message> resMessage = messageMapper.findsLookedMessage(userId);
 
-        if(resMessage != null){
-            return HttpResult.of(0, null, resMessage);
+        if (resMessage != null) {
+            return HttpResult.of(resMessage);
         }
 
         return HttpResult.of(HttpResultCodeEnum.NONE_LOOKED_MESSAGE);
@@ -85,21 +80,19 @@ public class MessageController {
 
     /**
      * @param userId
-     * @return
-     *
-     * 向前端返回所有未读邮件
+     * @return 向前端返回所有未读邮件
      */
     @CrossOrigin
     @RequestMapping("/notlook")
     @ResponseBody
-    public HttpResult<List<Message>> notLookMessage(@RequestBody Integer userId){
+    public HttpResult<List<Message>> notLookMessage(@RequestBody Integer userId) {
 
         System.out.println(userId);
 
         List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
 
-        if(resMessage != null){
-            return HttpResult.of(0, null, resMessage);
+        if (resMessage != null) {
+            return HttpResult.of(resMessage);
         }
 
         return HttpResult.of(HttpResultCodeEnum.NONE_NOT_LOOK_MESSAGE);
@@ -108,20 +101,18 @@ public class MessageController {
 
     /**
      * @param userId
-     * @return
-     *
-     * 向前端返回本账户下的所有简易申报信息
+     * @return 向前端返回本账户下的所有简易申报信息
      */
     @CrossOrigin
     @RequestMapping("/easystate")
     @ResponseBody
-    public HttpResult<List<EasyMeet>> easyState(@RequestBody Integer userId){
+    public HttpResult<List<EasyMeet>> easyState(@RequestBody Integer userId) {
         System.out.println(userId);
 
         List<EasyMeet> resEasyMeet = easyMapper.findsByUserId(userId);
 
-        if(resEasyMeet != null){
-            return HttpResult.of(0, null, resEasyMeet);
+        if (resEasyMeet != null) {
+            return HttpResult.of(resEasyMeet);
         }
 
         return HttpResult.of(HttpResultCodeEnum.NONE_EASY_MEET_MESSAGE);
@@ -131,20 +122,18 @@ public class MessageController {
 
     /**
      * @param userId
-     * @return
-     *
-     * 向前端返回本账户下的所有详细申报信息
+     * @return 向前端返回本账户下的所有详细申报信息
      */
     @CrossOrigin
     @RequestMapping("/detailstate")
     @ResponseBody
-    public HttpResult<List<DetailMeet>> detailState(@RequestBody Integer userId){
+    public HttpResult<List<DetailMeet>> detailState(@RequestBody Integer userId) {
         System.out.println(userId);
 
         List<DetailMeet> resDetailMeet = detailMapper.findsByUserId(userId);
 
-        if(resDetailMeet != null){
-            return HttpResult.of(0, null, resDetailMeet);
+        if (resDetailMeet != null) {
+            return HttpResult.of(resDetailMeet);
         }
 
         return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_MESSAGE);

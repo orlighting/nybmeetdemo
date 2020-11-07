@@ -50,4 +50,12 @@
     <select id="findsByUserId" resultMap="DetailMeetMap">
         select * from detailmeet where user_id = #{userId} and `delete` = false
     </select>
+
+    <select id="findAllNotCheck" resultMap="DetailMeetMap">
+        select * from detailmeet where check_state in (0,1) and `delete` = false
+    </select>
+
+    <update id="checkDetailMeet">
+        update detailmeet set check_state = #{checkState}, admin_id = #{adminId}, update_time = #{updateTime} where id = #{id}
+    </update>
 </mapper>
