@@ -6,11 +6,23 @@ import com.example.nybproject.meet.pojo.DetailMeet;
 import com.example.nybproject.meet.pojo.EasyMeet;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
+import com.mongodb.client.gridfs.model.GridFSFile;
+import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +39,8 @@ public class CheckController {
     private EasyMapper easyMapper;
     @Resource
     private DetailMapper detailMapper;
+    @Resource
+    private GridFsTemplate gridFsTemplate;
 
 
     /**
@@ -69,6 +83,37 @@ public class CheckController {
     public HttpResult<List<DetailMeet>> detailList() {
         List<DetailMeet> reqEasyMeet = detailMapper.findAllNotCheck();
         return HttpResult.of(reqEasyMeet);
+    }
+
+    /**
+     * 获取详细申报的文件
+     */
+    @CrossOrigin
+    @RequestMapping("/detailFile")
+    public ResponseEntity<FileSystemResource> detailList(String fileId) {
+        try {
+            GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
+            GridFsResource gridFsResource = gridFsTemplate.getResource(gridFSFile);
+            File file = new File("tmp");
+            FileUtils.copyInputStreamToFile(gridFsResource.getInputStream(), file);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+            headers.add("Content-Disposition", "attachment; filename=" + gridFSFile.getFilename());
+            headers.add("Pragma", "no-cache");
+            headers.add("Expires", "0");
+            headers.add("Last-Modified", new Date().toString());
+            headers.add("ETag", String.valueOf(System.currentTimeMillis()));
+
+            return ResponseEntity
+                    .ok()
+                    .headers(headers)
+                    .contentLength(file.length())
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .body(new FileSystemResource(file));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     /**
