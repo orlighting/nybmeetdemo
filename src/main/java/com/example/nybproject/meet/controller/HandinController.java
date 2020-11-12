@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 /**
  * 用户上报功能控制
@@ -55,7 +56,12 @@ public class HandinController {
         if (detailMeet == null) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
         }
-        if (detailMeet.getUserId() != easyMeet.getUserId() || detailMeet.getCheckState() != 2) {
+
+        System.out.println(detailMeet.getUserId());
+        System.out.println(detailMeet.getCheckState());
+        System.out.println(easyMeet.getUserId());
+
+        if (!Objects.equals(detailMeet.getUserId(),easyMeet.getUserId()) || detailMeet.getCheckState() != 2) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
         }
 

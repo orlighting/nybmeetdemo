@@ -10,6 +10,7 @@ import com.example.nybproject.meet.pojo.Message;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
 import com.example.nybproject.meet.service.IdGenerater;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,11 +66,11 @@ public class MessageController {
     @CrossOrigin
     @RequestMapping("/looked")
     @ResponseBody
-    public HttpResult<List<Message>> lookedMessage(@RequestBody Integer userId) {
+    public HttpResult<List<Message>> lookedMessage(@RequestBody JSONObject userId) {
 
         System.out.println(userId);
 
-        List<Message> resMessage = messageMapper.findsLookedMessage(userId);
+        List<Message> resMessage = messageMapper.findsLookedMessage(Integer.parseInt(userId.get("userId").toString()));
 
         if (resMessage != null) {
             return HttpResult.of(resMessage);
@@ -84,15 +85,13 @@ public class MessageController {
      * @return 向前端返回所有未读邮件
      */
     @CrossOrigin
-    @RequestMapping("/notlook")
+    @RequestMapping("/notLook")
     @ResponseBody
-    public HttpResult<List<Message>> notLookMessage(@RequestBody Integer userId) {
+    public HttpResult<List<Message>> notLookMessage(@RequestBody JSONObject userId) {
 
-        System.out.println(userId);
+        List<Message> resMessage = messageMapper.findsNotLookMessage(Integer.parseInt(userId.get("userId").toString()));
 
-        List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
-
-        if (resMessage != null) {
+        if (!resMessage.isEmpty()) {
             List<Integer> ids = resMessage.stream()
                     .map(Message::getId)
                     .collect(Collectors.toList());
@@ -109,13 +108,13 @@ public class MessageController {
      * @return 向前端返回所有未读邮件的数量
      */
     @CrossOrigin
-    @RequestMapping("/notlookcount")
+    @RequestMapping("/notLookCount")
     @ResponseBody
-    public HttpResult<Integer> notLookMessageCount(@RequestBody Integer userId) {
-        System.out.println(userId);
+    public HttpResult<Integer> notLookMessageCount(@RequestBody JSONObject userId) {
 
-        List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
-        int count = resMessage == null ? 0 : resMessage.size();
+        List<Message> resMessage = messageMapper.findsNotLookMessage(Integer.parseInt(userId.get("userId").toString()));
+        Integer count = resMessage == null ? 0 : resMessage.size();
+
         return HttpResult.of(count);
     }
 
@@ -124,12 +123,11 @@ public class MessageController {
      * @return 向前端返回本账户下的所有简易申报信息
      */
     @CrossOrigin
-    @RequestMapping("/easystate")
+    @RequestMapping("/easyState")
     @ResponseBody
-    public HttpResult<List<EasyMeet>> easyState(@RequestBody Integer userId) {
-        System.out.println(userId);
+    public HttpResult<List<EasyMeet>> easyState(@RequestBody JSONObject userId) {
 
-        List<EasyMeet> resEasyMeet = easyMapper.findsByUserId(userId);
+        List<EasyMeet> resEasyMeet = easyMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
 
         if (resEasyMeet != null) {
             return HttpResult.of(resEasyMeet);
@@ -145,18 +143,47 @@ public class MessageController {
      * @return 向前端返回本账户下的所有详细申报信息
      */
     @CrossOrigin
-    @RequestMapping("/detailstate")
+    @RequestMapping("/detailState")
     @ResponseBody
-    public HttpResult<List<DetailMeet>> detailState(@RequestBody Integer userId) {
-        System.out.println(userId);
+    public HttpResult<List<DetailMeet>> detailState(@RequestBody JSONObject userId) {
 
-        List<DetailMeet> resDetailMeet = detailMapper.findsByUserId(userId);
+        List<DetailMeet> resDetailMeet = detailMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
 
         if (resDetailMeet != null) {
             return HttpResult.of(resDetailMeet);
         }
 
         return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_MESSAGE);
+    }
+
+    /**
+     * @param
+     * @return 向前端返回未审核的简易申报的数量
+     */
+    @CrossOrigin
+    @RequestMapping("/easyNum")
+    @ResponseBody
+    public HttpResult<Integer> easyNum(){
+
+        List<EasyMeet> resEasyMeet = easyMapper.findAllNotCheckEasy();
+        Integer count = resEasyMeet == null ? 0 : resEasyMeet.size();
+        return HttpResult.of(count);
+
+    }
+
+    /**
+     * @param
+     * @return 向前端返回未审核的详细申报的数量
+     */
+    @CrossOrigin
+    @RequestMapping("/detailNum")
+    @ResponseBody
+    public HttpResult<Integer> detailNum(){
+
+        List<DetailMeet> resDetailMeet = detailMapper.findAllNotCheck();
+        Integer count = resDetailMeet == null ? 0 : resDetailMeet.size();
+        return HttpResult.of(count);
+
     }
 
 }

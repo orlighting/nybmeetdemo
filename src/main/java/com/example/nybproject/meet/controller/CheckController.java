@@ -7,7 +7,9 @@ import com.example.nybproject.meet.pojo.EasyMeet;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import com.sun.deploy.net.HttpUtils;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -19,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -66,10 +69,10 @@ public class CheckController {
     @ResponseBody
     public HttpResult<Void> easyCheck(@RequestBody EasyMeet easyMeet) {
 
-
         easyMeet.setUpdateTime(LocalDateTime.now());
 
-        if (easyMapper.checkEasyMeet(easyMeet.getId(), easyMeet.getCheckState(), easyMeet.getAdminId(), easyMeet.getUpdateTime()) == 1) {
+        int result = easyMapper.checkEasyMeet(easyMeet.getId(), easyMeet.getCheckState(), easyMeet.getAdminId(), easyMeet.getUpdateTime());
+        if (result == 1) {
             return HttpResult.of();
         }
 
@@ -92,9 +95,11 @@ public class CheckController {
      */
     @CrossOrigin
     @RequestMapping("/detailFile")
-    public ResponseEntity<FileSystemResource> detailList(String fileId) {
+    public ResponseEntity<FileSystemResource> detailList(@RequestBody JSONObject fileId) {
+        System.out.println(fileId);
+
         try {
-            GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
+            GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId.get("fileId"))));
             GridFsResource gridFsResource = gridFsTemplate.getResource(gridFSFile);
             File file = new File("tmp");
             FileUtils.copyInputStreamToFile(gridFsResource.getInputStream(), file);
@@ -116,6 +121,7 @@ public class CheckController {
                     .body(new FileSystemResource(file));
         } catch (Exception e) {
             log.error("获取文件出错，e=", e);
+
             return ResponseEntity.badRequest().body(null);
         }
     }
@@ -135,6 +141,5 @@ public class CheckController {
         }
         return HttpResult.of(HttpResultCodeEnum.SYSTEM_ERROR);
     }
-
 
 }

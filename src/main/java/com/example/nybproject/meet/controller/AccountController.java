@@ -31,9 +31,8 @@ public class AccountController {
     @CrossOrigin
     @PostMapping("/register")
     @ResponseBody
-    public HttpResult<Void> userRegister(@RequestBody User user) {
+    public HttpResult<Integer> userRegister(@RequestBody User user) {
 
-        System.out.println(user.getId());
         System.out.println(user.getPassword());
         if (userMapper.findsByIdentityCard(user.getIdentityCard()) != null) {
             return HttpResult.of(HttpResultCodeEnum.ACCOUNT_REGISTER_ID_CARD_REPEAT);
@@ -50,7 +49,9 @@ public class AccountController {
         user.setUpdateTime(LocalDateTime.now());
 
         if (userMapper.add(user) == 1) {
-            return HttpResult.of();
+            Integer userId = user.getId();
+
+            return HttpResult.of(userId);
         }
 
         return HttpResult.of(HttpResultCodeEnum.SYSTEM_ERROR);

@@ -26,10 +26,10 @@
         select max(id) from message
     </select>
     <select id="findsLookedMessage" resultMap="MessageMap">
-        select * from message where user_id = #{userId} and looked = true
+        select * from message where user_id = #{userId} and looked = true and `delete` = false
     </select>
     <select id="findsNotLookMessage" resultMap="MessageMap">
-        select * from message where user_id = #{userId} and looked = false
+        select * from message where user_id = #{userId} and looked = false and `delete` = false
     </select>
 
     <update id="updateNotLookMessageLooked">
