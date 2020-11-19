@@ -61,7 +61,7 @@ public class HandinController {
         System.out.println(detailMeet.getCheckState());
         System.out.println(easyMeet.getUserId());
 
-        if (!Objects.equals(detailMeet.getUserId(),easyMeet.getUserId()) || detailMeet.getCheckState() != 2) {
+        if (!Objects.equals(detailMeet.getUserId(), easyMeet.getUserId()) || detailMeet.getCheckState() != 2) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
         }
 
