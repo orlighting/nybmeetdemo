@@ -163,7 +163,7 @@ public class MessageController {
     @CrossOrigin
     @RequestMapping("/easyNum")
     @ResponseBody
-    public HttpResult<Integer> easyNum(){
+    public HttpResult<Integer> easyNum() {
 
         List<EasyMeet> resEasyMeet = easyMapper.findAllNotCheckEasy();
         Integer count = resEasyMeet == null ? 0 : resEasyMeet.size();
@@ -178,7 +178,7 @@ public class MessageController {
     @CrossOrigin
     @RequestMapping("/detailNum")
     @ResponseBody
-    public HttpResult<Integer> detailNum(){
+    public HttpResult<Integer> detailNum() {
 
         List<DetailMeet> resDetailMeet = detailMapper.findAllNotCheck();
         Integer count = resDetailMeet == null ? 0 : resDetailMeet.size();
