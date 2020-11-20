@@ -1,17 +1,12 @@
 package com.example.nybproject.meet.pojo;
 
-import lombok.*;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
-/**
- * 总结报告类
- */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Summary {
+public class ResSummary {
 
     /**
      * 本总结的id
@@ -82,5 +77,10 @@ public class Summary {
      * 记录是否被删除
      */
     private Boolean delete;
+
+    /**
+     * 总结报告
+     */
+    MultipartFile summaryFile;
 
 }

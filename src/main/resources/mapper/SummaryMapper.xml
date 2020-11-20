@@ -19,9 +19,16 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
     <select id="findsById" resultMap="SummaryMap">
-        select * from summary where id = #{id}
+        select * from summary where id = #{id} and `delete` = false
     </select>
     <select id="findNewId" resultType="java.lang.Integer">
         select max(id) from summary
+    </select>
+    <insert id="add">
+        insert into summary (id, user_id, admin_id, `kind`, country_num, company_num, area, buyer_num, media_num, turnover, `delete`, create_time, update_time)
+        values (#{id}, #{userId}, #{adminId}, #{kind}, #{countryNum}, #{companyNum}, #{area}, #{buyerNum}, #{mediaNum}, #{turnover}, #{delete}, #{createTime}, #{updateTime})
+    </insert>
+    <select id="findsAll" resultMap="SummaryMap">
+        select * from summary where `delete` = false
     </select>
 </mapper>

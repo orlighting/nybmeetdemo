@@ -2,9 +2,8 @@ package com.example.nybproject.meet.controller;
 
 import com.example.nybproject.meet.mapper.DetailMapper;
 import com.example.nybproject.meet.mapper.EasyMapper;
-import com.example.nybproject.meet.pojo.DetailMeet;
-import com.example.nybproject.meet.pojo.EasyMeet;
-import com.example.nybproject.meet.pojo.ResDetailMeet;
+import com.example.nybproject.meet.mapper.SummaryMapper;
+import com.example.nybproject.meet.pojo.*;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
 import com.example.nybproject.meet.service.IdGenerater;
@@ -42,6 +41,8 @@ public class HandinController {
     private IdGenerater idGenerater;
     @Resource
     private GridFsTemplate gridFsTemplate;
+    @Resource
+    private SummaryMapper summaryMapper;
 
     /**
      * @param easyMeet
@@ -104,6 +105,31 @@ public class HandinController {
         }
     }
 
+    @CrossOrigin
+    @RequestMapping("/summary")
+    @ResponseBody
+    public HttpResult<Void> summary(ResSummary resSummary){
+
+        try {
+            MultipartFile summaryFile = resSummary.getSummaryFile();
+            // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
+            resSummary.setId(idGenerater.getSummaryIdNow());
+            resSummary.setSummaryFileId(saveFileToMongo(summaryFile));
+
+            resSummary.setCreateTime(LocalDateTime.now());
+            resSummary.setUpdateTime(LocalDateTime.now());
+            resSummary.setDelete(false);
+
+            summaryMapper.add(convertResSummaryToSummary(resSummary));
+            return HttpResult.of();
+        } catch (Exception e) {
+            log.error("HandinController中summary方法出错", e);
+            return HttpResult.of(HttpResultCodeEnum.SYSTEM_ERROR);
+        }
+
+    }
+
+
     /**
      * 将前端传来的文件保存到mongo
      *
@@ -151,6 +177,26 @@ public class HandinController {
                 .leaderD(resDetailMeet.getLeaderD())
                 .leaderF(resDetailMeet.getLeaderF())
                 .delete(resDetailMeet.getDelete())
+                .build();
+    }
+
+    private Summary convertResSummaryToSummary(ResSummary resSummary){
+
+        return Summary.builder()
+                .id(resSummary.getId())
+                .userId(resSummary.getUserId())
+                .adminId(resSummary.getAdminId())
+                .kind(resSummary.getKind())
+                .countryNum(resSummary.getCountryNum())
+                .companyNum(resSummary.getCompanyNum())
+                .area(resSummary.getArea())
+                .buyerNum(resSummary.getBuyerNum())
+                .mediaNum(resSummary.getMediaNum())
+                .turnover(resSummary.getTurnover())
+                .summaryFileId(resSummary.getSummaryFileId())
+                .createTime(resSummary.getCreateTime())
+                .updateTime(resSummary.getUpdateTime())
+                .delete(resSummary.getDelete())
                 .build();
     }
 

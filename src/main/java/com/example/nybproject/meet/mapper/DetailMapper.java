@@ -17,5 +17,7 @@ public interface DetailMapper {
 
     List<DetailMeet> findAllNotCheck();
 
+    List<DetailMeet> findsAll();
+
     int checkDetailMeet(Integer id, Integer checkState, Integer adminId, LocalDateTime updateTime);
 }

@@ -17,6 +17,8 @@ public interface EasyMapper {
 
     List<EasyMeet> findsByUserId(Integer userId);
 
+    List<EasyMeet> findsAll();
+
     Integer findNewId();
 
 

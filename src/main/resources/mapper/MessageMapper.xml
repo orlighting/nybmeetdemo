@@ -39,4 +39,8 @@
         </foreach>
     </update>
 
+    <update id="deleteMessageById">
+        update message set `delete` where id = #{id}
+    </update>
+
 </mapper>
