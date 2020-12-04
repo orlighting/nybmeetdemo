@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nybproject.meet.mapper.MeetInfoMapper">
+    <resultMap id="MeetInfoMap" type="com.example.nybproject.meet.pojo.MeetInfo" >
+        <result column="name" property="name" />
+        <result column="data_resouce" property="dataResouce" />
+        <result column="latest_count" property="latestCount" />
+        <result column="host_time" property="hostTime" />
+        <result column="host_place" property="hostPlace" />
+        <result column="host_company" property="hostCompany" />
+        <result column="position" property="position" />
+        <result column="displayer_num" property="displayerNum" />
+        <result column="turnover" property="turnover" />
+    </resultMap>
+
+    <select id="findsAll" resultMap="MeetInfoMap">
+        select * from meet_info
+    </select>
+
+
+</mapper>

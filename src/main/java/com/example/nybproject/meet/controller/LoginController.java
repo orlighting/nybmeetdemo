@@ -29,14 +29,14 @@ public class LoginController {
     @CrossOrigin
     @PostMapping("/user")
     @ResponseBody
-    public HttpResult<Void> userLogin(@RequestBody User user) {
+    public HttpResult<User> userLogin(@RequestBody User user) {
         Integer id = user.getId();
 
         User resUser = userMapper.findsById(id);
         if (resUser == null) {
             return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         } else if (Objects.equals(resUser.getPassword(), user.getPassword())) {
-            return HttpResult.of();
+            return HttpResult.of(resUser);
         } else {
             return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         }

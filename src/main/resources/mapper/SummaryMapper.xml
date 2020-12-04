@@ -5,6 +5,7 @@
 <mapper namespace="com.example.nybproject.meet.mapper.SummaryMapper">
     <resultMap id="SummaryMap" type="com.example.nybproject.meet.pojo.Summary" >
         <result column="id" property="id" />
+        <result column="detail_id" property="detailId"/>
         <result column="user_id" property="userId" />
         <result column="admin_id" property="adminId" />
         <result column="kind" property="kind" />
@@ -14,6 +15,8 @@
         <result column="buyer_num" property="buyerNum" />
         <result column="media_num" property="mediaNum" />
         <result column="turnover" property="turnover" />
+        <result column="summary_file_id" property="summaryFileId" />
+        <result column="next_work_plan" property="nextWorkPlan"/>
         <result column="delete" property="delete" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
@@ -25,8 +28,8 @@
         select max(id) from summary
     </select>
     <insert id="add">
-        insert into summary (id, user_id, admin_id, `kind`, country_num, company_num, area, buyer_num, media_num, turnover, `delete`, create_time, update_time)
-        values (#{id}, #{userId}, #{adminId}, #{kind}, #{countryNum}, #{companyNum}, #{area}, #{buyerNum}, #{mediaNum}, #{turnover}, #{delete}, #{createTime}, #{updateTime})
+        insert into summary (id, detail_id, user_id, admin_id, `kind`, country_num, company_num, area, buyer_num, media_num, turnover, summary_file_id, next_work_plan, `delete`, create_time, update_time)
+        values (#{id}, #{detailId}, #{userId}, #{adminId}, #{kind}, #{countryNum}, #{companyNum}, #{area}, #{buyerNum}, #{mediaNum}, #{turnover}, #{summaryFileId}, #{nextWorkPlan}, #{delete}, #{createTime}, #{updateTime})
     </insert>
     <select id="findsAll" resultMap="SummaryMap">
         select * from summary where `delete` = false

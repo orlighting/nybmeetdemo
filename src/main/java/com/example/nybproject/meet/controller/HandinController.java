@@ -110,12 +110,27 @@ public class HandinController {
     @ResponseBody
     public HttpResult<Void> summary(ResSummary resSummary){
 
-        try {
-            MultipartFile summaryFile = resSummary.getSummaryFile();
-            // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
-            resSummary.setId(idGenerater.getSummaryIdNow());
-            resSummary.setSummaryFileId(saveFileToMongo(summaryFile));
+        DetailMeet detailMeet = detailMapper.findsById(resSummary.getDetailId());
 
+        if (detailMeet == null) {
+            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
+        }
+
+        System.out.println(detailMeet.getUserId());
+        System.out.println(detailMeet.getId());
+        System.out.println(detailMeet.getCheckState());
+
+        if (!Objects.equals(detailMeet.getUserId(), resSummary.getUserId()) || detailMeet.getCheckState() != 2) {
+            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
+        }
+
+        try {
+            if(resSummary.getKind()!=2){
+                MultipartFile summaryFile = resSummary.getSummaryFile();
+                // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
+                resSummary.setSummaryFileId(saveFileToMongo(summaryFile));
+            }
+            resSummary.setId(idGenerater.getSummaryIdNow());
             resSummary.setCreateTime(LocalDateTime.now());
             resSummary.setUpdateTime(LocalDateTime.now());
             resSummary.setDelete(false);
@@ -180,10 +195,12 @@ public class HandinController {
                 .build();
     }
 
+
     private Summary convertResSummaryToSummary(ResSummary resSummary){
 
         return Summary.builder()
                 .id(resSummary.getId())
+                .detailId(resSummary.getDetailId())
                 .userId(resSummary.getUserId())
                 .adminId(resSummary.getAdminId())
                 .kind(resSummary.getKind())
@@ -194,10 +211,12 @@ public class HandinController {
                 .mediaNum(resSummary.getMediaNum())
                 .turnover(resSummary.getTurnover())
                 .summaryFileId(resSummary.getSummaryFileId())
+                .nextWorkPlan(resSummary.getNextWorkPlan())
                 .createTime(resSummary.getCreateTime())
                 .updateTime(resSummary.getUpdateTime())
                 .delete(resSummary.getDelete())
                 .build();
     }
+
 
 }

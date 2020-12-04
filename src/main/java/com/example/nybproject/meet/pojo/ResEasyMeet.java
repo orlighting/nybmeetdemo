@@ -1,17 +1,12 @@
 package com.example.nybproject.meet.pojo;
 
-
-import lombok.*;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-
-/**
- * 简易申报类
- */
 @Data
-public class EasyMeet {
+public class ResEasyMeet {
 
     /**
      * 本详细申报的id
@@ -152,5 +147,20 @@ public class EasyMeet {
      * 该记录是否被删除
      */
     private Boolean delete;
+
+    /**
+     * 招展招商方案文档
+     */
+    MultipartFile investmentPlanFile;
+
+    /**
+     * 展会工作方案文档
+     */
+    MultipartFile meetPlanFile;
+
+    /**
+     * 上级单位审核意见文件
+     */
+    MultipartFile authFile;
 
 }

@@ -3,9 +3,11 @@ package com.example.nybproject.meet.controller;
 
 import com.example.nybproject.meet.mapper.DetailMapper;
 import com.example.nybproject.meet.mapper.EasyMapper;
+import com.example.nybproject.meet.mapper.MeetInfoMapper;
 import com.example.nybproject.meet.mapper.MessageMapper;
 import com.example.nybproject.meet.pojo.DetailMeet;
 import com.example.nybproject.meet.pojo.EasyMeet;
+import com.example.nybproject.meet.pojo.MeetInfo;
 import com.example.nybproject.meet.pojo.Message;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
@@ -35,6 +37,8 @@ public class MessageController {
     private EasyMapper easyMapper;
     @Resource
     private DetailMapper detailMapper;
+    @Resource
+    private MeetInfoMapper meetInfoMapper;
 
     /**
      * @param message
@@ -183,6 +187,16 @@ public class MessageController {
         List<DetailMeet> resDetailMeet = detailMapper.findAllNotCheck();
         Integer count = resDetailMeet == null ? 0 : resDetailMeet.size();
         return HttpResult.of(count);
+
+    }
+
+
+    @CrossOrigin
+    @RequestMapping("/meetInfo")
+    @ResponseBody
+    public HttpResult<List<MeetInfo>> meetInfo(){
+
+        return HttpResult.of(meetInfoMapper.findsAll());
 
     }
 
