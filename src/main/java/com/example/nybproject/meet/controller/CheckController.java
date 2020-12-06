@@ -1,7 +1,7 @@
 package com.example.nybproject.meet.controller;
 
-import com.example.nybproject.meet.mapper.DetailMapper;
-import com.example.nybproject.meet.mapper.EasyMapper;
+import com.example.nybproject.meet.mapper.DetailMeetMapper;
+import com.example.nybproject.meet.mapper.EasyMeetMapper;
 import com.example.nybproject.meet.pojo.DetailMeet;
 import com.example.nybproject.meet.pojo.EasyMeet;
 import com.example.nybproject.meet.result.HttpResult;
@@ -39,9 +39,9 @@ import java.util.List;
 public class CheckController {
 
     @Resource
-    private EasyMapper easyMapper;
+    private EasyMeetMapper easyMeetMapper;
     @Resource
-    private DetailMapper detailMapper;
+    private DetailMeetMapper detailMeetMapper;
     @Resource
     private GridFsTemplate gridFsTemplate;
 
@@ -54,7 +54,7 @@ public class CheckController {
     @ResponseBody
     public HttpResult<List<EasyMeet>> easyList() {
 
-        List<EasyMeet> reqEasyMeet = easyMapper.findAllNotCheckEasy();
+        List<EasyMeet> reqEasyMeet = easyMeetMapper.findAllNotCheckEasy();
 
         return HttpResult.of(reqEasyMeet);
     }
@@ -69,7 +69,7 @@ public class CheckController {
 
         easyMeet.setUpdateTime(LocalDateTime.now());
 
-        int result = easyMapper.checkEasyMeet(easyMeet.getId(), easyMeet.getCheckState(), easyMeet.getAdminId(), easyMeet.getUpdateTime());
+        int result = easyMeetMapper.checkEasyMeet(easyMeet.getId(), easyMeet.getCheckState(), easyMeet.getAdminId());
         if (result == 1) {
             return HttpResult.of();
         }
@@ -84,7 +84,7 @@ public class CheckController {
     @RequestMapping("/detailList")
     @ResponseBody
     public HttpResult<List<DetailMeet>> detailList() {
-        List<DetailMeet> reqEasyMeet = detailMapper.findAllNotCheck();
+        List<DetailMeet> reqEasyMeet = detailMeetMapper.findAllNotCheck();
         return HttpResult.of(reqEasyMeet);
     }
 
@@ -131,9 +131,8 @@ public class CheckController {
     @PostMapping("/detail")
     @ResponseBody
     public HttpResult<Void> detailCheck(@RequestBody DetailMeet detailMeet) {
-        detailMeet.setUpdateTime(LocalDateTime.now());
 
-        int result = detailMapper.checkDetailMeet(detailMeet.getId(), detailMeet.getCheckState(), detailMeet.getAdminId(), detailMeet.getUpdateTime());
+        int result = detailMeetMapper.checkDetailMeet(detailMeet.getId(), detailMeet.getCheckState(), detailMeet.getAdminId());
         if (result == 1) {
             return HttpResult.of();
         }

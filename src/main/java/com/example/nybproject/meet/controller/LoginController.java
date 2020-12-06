@@ -32,7 +32,7 @@ public class LoginController {
     public HttpResult<User> userLogin(@RequestBody User user) {
         Integer id = user.getId();
 
-        User resUser = userMapper.findsById(id);
+        User resUser = userMapper.getByPrimaryKey(id);
         if (resUser == null) {
             return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         } else if (Objects.equals(resUser.getPassword(), user.getPassword())) {
@@ -49,7 +49,7 @@ public class LoginController {
 
         Integer id = admin.getId();
 
-        Admin resAdmin = adminMapper.findsById(id);
+        Admin resAdmin = adminMapper.getByPrimaryKey(id);
 
         if (resAdmin == null) {
             return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);

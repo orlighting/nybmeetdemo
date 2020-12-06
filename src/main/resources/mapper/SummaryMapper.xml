@@ -1,37 +1,251 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.nybproject.meet.mapper.SummaryMapper">
-    <resultMap id="SummaryMap" type="com.example.nybproject.meet.pojo.Summary" >
-        <result column="id" property="id" />
-        <result column="detail_id" property="detailId"/>
-        <result column="user_id" property="userId" />
-        <result column="admin_id" property="adminId" />
-        <result column="kind" property="kind" />
-        <result column="country_num" property="countryNum" />
-        <result column="company_num" property="companyNum" />
-        <result column="area" property="area" />
-        <result column="buyer_num" property="buyerNum" />
-        <result column="media_num" property="mediaNum" />
-        <result column="turnover" property="turnover" />
-        <result column="summary_file_id" property="summaryFileId" />
-        <result column="next_work_plan" property="nextWorkPlan"/>
-        <result column="delete" property="delete" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+
+    <resultMap id="BaseResultMap" type="com.example.nybproject.meet.pojo.Summary">
+        <result property="id" column="id"/>
+        <result property="meetId" column="meet_id"/>
+        <result property="adminId" column="admin_id"/>
+        <result property="countryNum" column="country_num"/>
+        <result property="provinceState" column="province_state"/>
+        <result property="companyNum" column="company_num"/>
+        <result property="area" column="area"/>
+        <result property="displayObj" column="display_obj"/>
+        <result property="buyerNum" column="buyer_num"/>
+        <result property="mediaNum" column="media_num"/>
+        <result property="turnover" column="turnover"/>
+        <result property="viewerNum" column="viewer_num"/>
+        <result property="activityNum" column="activity_num"/>
+        <result property="meetHighlight" column="meet_highlight"/>
+        <result property="nextWorkPlan" column="next_work_plan"/>
+        <result property="summaryFileId" column="summary_file_id"/>
+        <result property="hosterSignFileId" column="hoster_sign_file_id"/>
+        <result property="kind" column="kind"/>
+        <result property="delete" column="delete"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
-    <select id="findsById" resultMap="SummaryMap">
-        select * from summary where id = #{id} and `delete` = false
-    </select>
-    <select id="findNewId" resultType="java.lang.Integer">
-        select max(id) from summary
-    </select>
-    <insert id="add">
-        insert into summary (id, detail_id, user_id, admin_id, `kind`, country_num, company_num, area, buyer_num, media_num, turnover, summary_file_id, next_work_plan, `delete`, create_time, update_time)
-        values (#{id}, #{detailId}, #{userId}, #{adminId}, #{kind}, #{countryNum}, #{companyNum}, #{area}, #{buyerNum}, #{mediaNum}, #{turnover}, #{summaryFileId}, #{nextWorkPlan}, #{delete}, #{createTime}, #{updateTime})
+
+    <sql id="Base_Column_List">
+        id ,meet_id ,admin_id ,country_num ,province_state ,company_num ,area ,display_obj ,buyer_num ,media_num ,turnover ,viewer_num ,activity_num ,meet_highlight ,next_work_plan ,summary_file_id ,hoster_sign_file_id ,kind ,`delete` ,create_time ,update_time
+    </sql>
+
+    <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.Summary">
+        INSERT INTO summary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                id  ,
+            </if>
+            <if test="null!=meetId">
+                meet_id  ,
+            </if>
+            <if test="null!=adminId">
+                admin_id  ,
+            </if>
+            <if test="null!=countryNum">
+                country_num  ,
+            </if>
+            <if test="null!=provinceState">
+                province_state  ,
+            </if>
+            <if test="null!=companyNum">
+                company_num  ,
+            </if>
+            <if test="null!=area">
+                area  ,
+            </if>
+            <if test="null!=displayObj">
+                display_obj  ,
+            </if>
+            <if test="null!=buyerNum">
+                buyer_num  ,
+            </if>
+            <if test="null!=mediaNum">
+                media_num  ,
+            </if>
+            <if test="null!=turnover">
+                turnover  ,
+            </if>
+            <if test="null!=viewerNum">
+                viewer_num  ,
+            </if>
+            <if test="null!=activityNum">
+                activity_num  ,
+            </if>
+            <if test="null!=meetHighlight">
+                meet_highlight  ,
+            </if>
+            <if test="null!=nextWorkPlan">
+                next_work_plan  ,
+            </if>
+            <if test="null!=summaryFileId">
+                summary_file_id  ,
+            </if>
+            <if test="null!=hosterSignFileId">
+                hoster_sign_file_id  ,
+            </if>
+            <if test="null!=kind">
+                kind  ,
+            </if>
+            <if test="null!=delete">
+                `delete`  ,
+            </if>
+            <if test="null!=createTime">
+                create_time  ,
+            </if>
+            <if test="null!=updateTime">
+                update_time
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                #{id, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=meetId">
+                #{meetId, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=adminId">
+                #{adminId, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=countryNum">
+                #{countryNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=provinceState">
+                #{provinceState, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=companyNum">
+                #{companyNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=area">
+                #{area, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=displayObj">
+                #{displayObj, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=buyerNum">
+                #{buyerNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=mediaNum">
+                #{mediaNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=turnover">
+                #{turnover, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=viewerNum">
+                #{viewerNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=activityNum">
+                #{activityNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=meetHighlight">
+                #{meetHighlight, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=nextWorkPlan">
+                #{nextWorkPlan, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=summaryFileId">
+                #{summaryFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=hosterSignFileId">
+                #{hosterSignFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=kind">
+                #{kind, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=delete">
+                #{delete, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </trim>
     </insert>
-    <select id="findsAll" resultMap="SummaryMap">
-        select * from summary where `delete` = false
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.nybproject.meet.pojo.Summary">
+        UPDATE summary
+        <set>
+            <if test="null!=meetId">
+                meet_id = #{meetId, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=adminId">
+                admin_id = #{adminId, jdbcType=BIGINT} ,
+            </if>
+            <if test="null!=countryNum">
+                country_num = #{countryNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=provinceState and ''!=provinceState ">
+                province_state = #{provinceState, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=companyNum">
+                company_num = #{companyNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=area">
+                area = #{area, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=displayObj and ''!=displayObj ">
+                display_obj = #{displayObj, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=buyerNum">
+                buyer_num = #{buyerNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=mediaNum">
+                media_num = #{mediaNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=turnover">
+                turnover = #{turnover, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=viewerNum">
+                viewer_num = #{viewerNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=activityNum">
+                activity_num = #{activityNum, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=meetHighlight and ''!=meetHighlight ">
+                meet_highlight = #{meetHighlight, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=nextWorkPlan and ''!=nextWorkPlan ">
+                next_work_plan = #{nextWorkPlan, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=summaryFileId and ''!=summaryFileId ">
+                summary_file_id = #{summaryFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=hosterSignFileId and ''!=hosterSignFileId ">
+                hoster_sign_file_id = #{hosterSignFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=kind">
+                kind = #{kind, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=delete">
+                `delete` = #{delete, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                create_time = #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                update_time = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="getByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM summary
+        WHERE
+        id = #{id} AND
+        `delete` = 0
     </select>
+
+    <select id="findsAll" resultMap="BaseResultMap">
+        select * from summary where `delete` = 0
+    </select>
+
 </mapper>

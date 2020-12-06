@@ -1,10 +1,9 @@
 package com.example.nybproject.meet.pojo;
 
 
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 /**
@@ -81,7 +80,7 @@ public class EasyMeet {
     /**
      * 展会内容
      */
-    private String meet_state;
+    private String meetState;
 
     /**
      * 是否邀请境外参展商或有关机构

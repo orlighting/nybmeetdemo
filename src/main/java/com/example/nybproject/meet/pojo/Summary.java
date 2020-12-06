@@ -1,6 +1,9 @@
 package com.example.nybproject.meet.pojo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -117,7 +120,6 @@ public class Summary {
      * 记录更新时间
      */
     private LocalDateTime updateTime;
-
 
 
 }

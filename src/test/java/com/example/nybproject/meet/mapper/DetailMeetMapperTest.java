@@ -11,9 +11,9 @@ import javax.annotation.Resource;
  * @date 2020/11/7 9:25
  */
 @SpringBootTest
-class DetailMapperTest {
+class DetailMeetMapperTest {
     @Resource
-    private DetailMapper detailMapper;
+    private DetailMeetMapper detailMeetMapper;
 
     @Test
     void add() {
@@ -22,7 +22,7 @@ class DetailMapperTest {
 
     @Test
     void findsById() {
-        DetailMeet detailMeet = detailMapper.findsById(102000000);
+        DetailMeet detailMeet = detailMeetMapper.getByPrimaryKey(102000000);
         System.out.println(detailMeet);
     }
 

@@ -1,35 +1,134 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.nybproject.meet.mapper.MessageMapper">
-    <resultMap id="MessageMap" type="com.example.nybproject.meet.pojo.Message" >
-        <result column="id" property="id" />
-        <result column="admin_id" property="adminId" />
-        <result column="user_id" property="userId" />
-        <result column="title" property="title" />
-        <result column="content" property="content" />
-        <result column="looked" property="looked" />
-        <result column="delete" property="delete" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+
+    <resultMap id="BaseResultMap" type="com.example.nybproject.meet.pojo.Message">
+        <result property="id" column="id"/>
+        <result property="adminId" column="admin_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="looked" column="looked"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delete" column="delete"/>
     </resultMap>
 
-    <select id="findsById" resultMap="MessageMap">
-        select * from message where id = #{id}
-    </select>
-    <insert id="add">
-        insert into message (id, admin_id, user_id, title, content, looked, `delete`, create_time, update_time)
-        values (#{id}, #{adminId}, #{userId}, #{title}, #{content}, #{looked}, #{delete}, #{createTime}, #{updateTime})
+    <sql id="Base_Column_List">
+        id ,admin_id ,user_id ,title ,content ,looked ,create_time ,update_time ,`delete`
+    </sql>
+
+    <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.Message">
+        INSERT INTO message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                id  ,
+            </if>
+            <if test="null!=adminId">
+                admin_id  ,
+            </if>
+            <if test="null!=userId">
+                user_id  ,
+            </if>
+            <if test="null!=title">
+                title  ,
+            </if>
+            <if test="null!=content">
+                content  ,
+            </if>
+            <if test="null!=looked">
+                looked  ,
+            </if>
+            <if test="null!=createTime">
+                create_time  ,
+            </if>
+            <if test="null!=updateTime">
+                update_time  ,
+            </if>
+            <if test="null!=delete">
+                `delete`
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                #{id, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=adminId">
+                #{adminId, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=userId">
+                #{userId, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=title">
+                #{title, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=content">
+                #{content, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=looked">
+                #{looked, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                #{updateTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=delete">
+                #{delete, jdbcType=TINYINT}
+            </if>
+        </trim>
     </insert>
-    <select id="findNewId" resultType="java.lang.Integer">
-        select max(id) from message
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.nybproject.meet.pojo.Message">
+        UPDATE message
+        <set>
+            <if test="null!=adminId">
+                admin_id = #{adminId, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=userId">
+                user_id = #{userId, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=title and ''!=title ">
+                title = #{title, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=content and ''!=content ">
+                content = #{content, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=looked">
+                looked = #{looked, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                create_time = #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                update_time = #{updateTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=delete">
+                `delete` = #{delete, jdbcType=TINYINT}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM message
+        WHERE
+        id = #{id}
     </select>
-    <select id="findsLookedMessage" resultMap="MessageMap">
-        select * from message where user_id = #{userId} and looked = true and `delete` = false
+
+    <select id="findsLookedMessage" resultMap="BaseResultMap">
+        select * from message where user_id = #{userId} and looked = 1 and `delete` = 0
     </select>
-    <select id="findsNotLookMessage" resultMap="MessageMap">
-        select * from message where user_id = #{userId} and looked = false and `delete` = false
+
+    <select id="findsNotLookMessage" resultMap="BaseResultMap">
+        select * from message where user_id = #{userId} and looked = 0 and `delete` = 0
     </select>
 
     <update id="updateNotLookMessageLooked">

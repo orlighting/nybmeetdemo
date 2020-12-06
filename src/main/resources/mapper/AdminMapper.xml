@@ -1,22 +1,106 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.nybproject.meet.mapper.AdminMapper">
-    <resultMap id="AdminMap" type="com.example.nybproject.meet.pojo.Admin" >
-        <result column="id" property="id" />
-        <result column="password" property="password" />
-        <result column="tele_num" property="teleNum" />
-        <result column="department" property="department" />
-        <result column="identity_card" property="identityCard" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+
+    <resultMap id="BaseResultMap" type="com.example.nybproject.meet.pojo.Admin">
+        <result property="id" column="id"/>
+        <result property="password" column="password"/>
+        <result property="teleNum" column="tele_num"/>
+        <result property="department" column="department"/>
+        <result property="identityNum" column="identity_num"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
-    <select id="findsById" resultMap="AdminMap">
-        select * from admin where id = #{id}
-    </select>
-    <select id="findAll" resultMap="AdminMap">
-        select * from admin
+
+    <sql id="Base_Column_List">
+        id ,password ,tele_num ,department ,identity_num ,create_time ,update_time
+    </sql>
+
+    <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.Admin">
+        INSERT INTO admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                id  ,
+            </if>
+            <if test="null!=password">
+                password  ,
+            </if>
+            <if test="null!=teleNum">
+                tele_num  ,
+            </if>
+            <if test="null!=department">
+                department  ,
+            </if>
+            <if test="null!=identityNum">
+                identity_num  ,
+            </if>
+            <if test="null!=createTime">
+                create_time  ,
+            </if>
+            <if test="null!=updateTime">
+                update_time
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                #{id, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=password">
+                #{password, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=teleNum">
+                #{teleNum, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=department">
+                #{department, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=identityNum">
+                #{identityNum, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=createTime">
+                #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.nybproject.meet.pojo.Admin">
+        UPDATE admin
+        <set>
+            <if test="null!=password and ''!=password ">
+                password = #{password, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=teleNum and ''!=teleNum ">
+                tele_num = #{teleNum, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=department and ''!=department ">
+                department = #{department, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=identityNum and ''!=identityNum ">
+                identity_num = #{identityNum, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=createTime">
+                create_time = #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                update_time = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM admin
+        WHERE
+        id = #{id}
     </select>
 
 </mapper>

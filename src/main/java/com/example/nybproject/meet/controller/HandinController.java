@@ -1,12 +1,12 @@
 package com.example.nybproject.meet.controller;
 
-import com.example.nybproject.meet.mapper.DetailMapper;
-import com.example.nybproject.meet.mapper.EasyMapper;
+import com.example.nybproject.meet.mapper.DetailMeetMapper;
+import com.example.nybproject.meet.mapper.EasyMeetMapper;
 import com.example.nybproject.meet.mapper.SummaryMapper;
 import com.example.nybproject.meet.pojo.*;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
-import com.example.nybproject.meet.service.IdGenerater;
+import com.example.nybproject.meet.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -17,9 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -34,11 +32,9 @@ import java.util.Objects;
 public class HandinController {
 
     @Resource
-    private EasyMapper easyMapper;
+    private EasyMeetMapper easyMeetMapper;
     @Resource
-    private DetailMapper detailMapper;
-    @Resource
-    private IdGenerater idGenerater;
+    private DetailMeetMapper detailMeetMapper;
     @Resource
     private GridFsTemplate gridFsTemplate;
     @Resource
@@ -53,27 +49,19 @@ public class HandinController {
     @ResponseBody
     public HttpResult<Void> easy(@RequestBody EasyMeet easyMeet) {
 
-        DetailMeet detailMeet = detailMapper.findsById(easyMeet.getDmeetId());
+        DetailMeet detailMeet = detailMeetMapper.getByPrimaryKey(easyMeet.getDmeetId());
         if (detailMeet == null) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
         }
-
-        System.out.println(detailMeet.getUserId());
-        System.out.println(detailMeet.getCheckState());
-        System.out.println(easyMeet.getUserId());
 
         if (!Objects.equals(detailMeet.getUserId(), easyMeet.getUserId()) || detailMeet.getCheckState() != 2) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
         }
 
-        easyMeet.setId(idGenerater.getEasyMeetIdNow());
         easyMeet.setAdminId(0);
-        easyMeet.setDelete(false);
-        easyMeet.setCreateTime(LocalDateTime.now());
-        easyMeet.setUpdateTime(LocalDateTime.now());
         easyMeet.setCheckState(0);
 
-        if (easyMapper.add(easyMeet) == 1) {
+        if (easyMeetMapper.saveSelective(easyMeet) == 1) {
             return HttpResult.of();
         }
 
@@ -89,15 +77,13 @@ public class HandinController {
             MultipartFile preExpoFile = resDetailMeet.getPreExpoFile();
             MultipartFile investmentPlanFile = resDetailMeet.getInvestmentPlanFile();
             // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
-            resDetailMeet.setId(idGenerater.getDetailMeetIdNow());
             resDetailMeet.setPreExpoFileId(saveFileToMongo(preExpoFile));
             resDetailMeet.setInvestmentPlanFileId(saveFileToMongo(investmentPlanFile));
             resDetailMeet.setCreateTime(LocalDateTime.now());
             resDetailMeet.setUpdateTime(LocalDateTime.now());
             resDetailMeet.setCheckState(0);
-            resDetailMeet.setDelete(false);
 
-            detailMapper.add(convertResDetailMeetToDetailMeet(resDetailMeet));
+            detailMeetMapper.saveSelective(JsonUtil.convertObject(resDetailMeet, DetailMeet.class));
             return HttpResult.of();
         } catch (Exception e) {
             log.error("HandinController中detail方法出错", e);
@@ -108,9 +94,9 @@ public class HandinController {
     @CrossOrigin
     @RequestMapping("/summary")
     @ResponseBody
-    public HttpResult<Void> summary(ResSummary resSummary){
+    public HttpResult<Void> summary(ResSummary resSummary) {
 
-        DetailMeet detailMeet = detailMapper.findsById(resSummary.getDetailId());
+        DetailMeet detailMeet = detailMeetMapper.getByPrimaryKey(resSummary.getDetailId());
 
         if (detailMeet == null) {
             return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
@@ -125,17 +111,13 @@ public class HandinController {
         }
 
         try {
-            if(resSummary.getKind()!=2){
+            if (resSummary.getKind() != 2) {
                 MultipartFile summaryFile = resSummary.getSummaryFile();
                 // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
                 resSummary.setSummaryFileId(saveFileToMongo(summaryFile));
             }
-            resSummary.setId(idGenerater.getSummaryIdNow());
-            resSummary.setCreateTime(LocalDateTime.now());
-            resSummary.setUpdateTime(LocalDateTime.now());
-            resSummary.setDelete(false);
 
-            summaryMapper.add(convertResSummaryToSummary(resSummary));
+            summaryMapper.saveSelective(JsonUtil.convertObject(resSummary, Summary.class));
             return HttpResult.of();
         } catch (Exception e) {
             log.error("HandinController中summary方法出错", e);
@@ -157,66 +139,5 @@ public class HandinController {
         ObjectId objectId = gridFsTemplate.store(inputStream, fileName);
         return objectId.toHexString();
     }
-
-    private DetailMeet convertResDetailMeetToDetailMeet(ResDetailMeet resDetailMeet) {
-        LocalDate date = LocalDate.parse(resDetailMeet.getTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
-        return DetailMeet.builder()
-                .id(resDetailMeet.getId())
-                .userId(resDetailMeet.getUserId())
-                .adminId(resDetailMeet.getAdminId())
-                .finanFund(resDetailMeet.getFinanFund())
-                .otherFund(resDetailMeet.getOtherFund())
-                .checkState(resDetailMeet.getCheckState())
-                .area(resDetailMeet.getArea())
-                .domestic(resDetailMeet.getDomestic())
-                .foreign(resDetailMeet.getForeign())
-                .name(resDetailMeet.getName())
-                .hostComp(resDetailMeet.getHostComp())
-                .fundComp(resDetailMeet.getFundComp())
-                .authObj(resDetailMeet.getAuthObj())
-                .authNum(resDetailMeet.getAuthNum())
-                .place(resDetailMeet.getPlace())
-                .cycle(resDetailMeet.getCycle())
-                .content(resDetailMeet.getContent())
-                .finanFrom(resDetailMeet.getFinanFrom())
-                .otherFrom(resDetailMeet.getOtherFrom())
-                .declare(resDetailMeet.getDeclare())
-                .preExpoFileId(resDetailMeet.getPreExpoFileId())
-                .investmentPlanFileId(resDetailMeet.getInvestmentPlanFileId())
-                .time(date)
-                .createTime(resDetailMeet.getCreateTime())
-                .updateTime(resDetailMeet.getUpdateTime())
-                .view1(resDetailMeet.getView1())
-                .view2(resDetailMeet.getView2())
-                .leaderD(resDetailMeet.getLeaderD())
-                .leaderF(resDetailMeet.getLeaderF())
-                .delete(resDetailMeet.getDelete())
-                .build();
-    }
-
-
-    private Summary convertResSummaryToSummary(ResSummary resSummary){
-
-        return Summary.builder()
-                .id(resSummary.getId())
-                .detailId(resSummary.getDetailId())
-                .userId(resSummary.getUserId())
-                .adminId(resSummary.getAdminId())
-                .kind(resSummary.getKind())
-                .countryNum(resSummary.getCountryNum())
-                .companyNum(resSummary.getCompanyNum())
-                .area(resSummary.getArea())
-                .buyerNum(resSummary.getBuyerNum())
-                .mediaNum(resSummary.getMediaNum())
-                .turnover(resSummary.getTurnover())
-                .summaryFileId(resSummary.getSummaryFileId())
-                .nextWorkPlan(resSummary.getNextWorkPlan())
-                .createTime(resSummary.getCreateTime())
-                .updateTime(resSummary.getUpdateTime())
-                .delete(resSummary.getDelete())
-                .build();
-    }
-
 
 }

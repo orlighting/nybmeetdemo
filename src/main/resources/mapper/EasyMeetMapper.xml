@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.nybproject.meet.mapper.EasyMeetMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.nybproject.meet.pojo.EasyMeet">
+        <result property="id" column="id"/>
+        <result property="meetAddr" column="meet_addr"/>
+        <result property="adminId" column="admin_id"/>
+        <result property="name" column="name"/>
+        <result property="hostComp" column="host_comp"/>
+        <result property="fundComp" column="fund_comp"/>
+        <result property="supportComp" column="support_comp"/>
+        <result property="authObj" column="auth_obj"/>
+        <result property="authNum" column="auth_num"/>
+        <result property="place" column="place"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="area" column="area"/>
+        <result property="meetState" column="meet_state"/>
+        <result property="foreign" column="foreign"/>
+        <result property="view1" column="view1"/>
+        <result property="view2" column="view2"/>
+        <result property="finanFrom" column="finan_from"/>
+        <result property="finanFund" column="finan_fund"/>
+        <result property="leaderState" column="leader_state"/>
+        <result property="activityBrief" column="activity_brief"/>
+        <result property="meetPlanFileId" column="meet_plan_file_id"/>
+        <result property="authFileId" column="auth_file_id"/>
+        <result property="investmentPlanFileId" column="investment_plan_file_id"/>
+        <result property="checkState" column="check_state"/>
+        <result property="delete" column="delete"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id ,meet_addr ,admin_id ,`name` ,host_comp ,fund_comp ,support_comp ,auth_obj ,auth_num ,place ,start_time ,end_time ,area ,meet_state ,`foreign` ,view1 ,view2 ,finan_from ,finan_fund ,leader_state ,activity_brief ,meet_plan_file_id ,auth_file_id ,investment_plan_file_id ,check_state ,`delete` ,create_time ,update_time
+    </sql>
+
+    <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.EasyMeet">
+        INSERT INTO easymeet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                id  ,
+            </if>
+            <if test="null!=meetAddr">
+                meet_addr  ,
+            </if>
+            <if test="null!=adminId">
+                admin_id  ,
+            </if>
+            <if test="null!=name">
+                `name`  ,
+            </if>
+            <if test="null!=hostComp">
+                host_comp  ,
+            </if>
+            <if test="null!=fundComp">
+                fund_comp  ,
+            </if>
+            <if test="null!=supportComp">
+                support_comp  ,
+            </if>
+            <if test="null!=authObj">
+                auth_obj  ,
+            </if>
+            <if test="null!=authNum">
+                auth_num  ,
+            </if>
+            <if test="null!=place">
+                place  ,
+            </if>
+            <if test="null!=startTime">
+                start_time  ,
+            </if>
+            <if test="null!=endTime">
+                end_time  ,
+            </if>
+            <if test="null!=area">
+                area  ,
+            </if>
+            <if test="null!=meetState">
+                meet_state  ,
+            </if>
+            <if test="null!=foreign">
+                `foreign`  ,
+            </if>
+            <if test="null!=view1">
+                view1  ,
+            </if>
+            <if test="null!=view2">
+                view2  ,
+            </if>
+            <if test="null!=finanFrom">
+                finan_from  ,
+            </if>
+            <if test="null!=finanFund">
+                finan_fund  ,
+            </if>
+            <if test="null!=leaderState">
+                leader_state  ,
+            </if>
+            <if test="null!=activityBrief">
+                activity_brief  ,
+            </if>
+            <if test="null!=meetPlanFileId">
+                meet_plan_file_id  ,
+            </if>
+            <if test="null!=authFileId">
+                auth_file_id  ,
+            </if>
+            <if test="null!=investmentPlanFileId">
+                investment_plan_file_id  ,
+            </if>
+            <if test="null!=checkState">
+                check_state  ,
+            </if>
+            <if test="null!=delete">
+                `delete`  ,
+            </if>
+            <if test="null!=createTime">
+                create_time  ,
+            </if>
+            <if test="null!=updateTime">
+                update_time
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                #{id, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=meetAddr">
+                #{meetAddr, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=adminId">
+                #{adminId, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=name">
+                #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=hostComp">
+                #{hostComp, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=fundComp">
+                #{fundComp, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=supportComp">
+                #{supportComp, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=authObj">
+                #{authObj, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=authNum">
+                #{authNum, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=place">
+                #{place, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=startTime">
+                #{startTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=endTime">
+                #{endTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=area">
+                #{area, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=meetState">
+                #{meetState, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=foreign">
+                #{foreign, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=view1">
+                #{view1, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=view2">
+                #{view2, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=finanFrom">
+                #{finanFrom, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=finanFund">
+                #{finanFund, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=leaderState">
+                #{leaderState, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=activityBrief">
+                #{activityBrief, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=meetPlanFileId">
+                #{meetPlanFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=authFileId">
+                #{authFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=investmentPlanFileId">
+                #{investmentPlanFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=checkState">
+                #{checkState, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=delete">
+                #{delete, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.nybproject.meet.pojo.EasyMeet">
+        UPDATE easymeet
+        <set>
+            <if test="null!=meetAddr and ''!=meetAddr ">
+                meet_addr = #{meetAddr, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=adminId">
+                admin_id = #{adminId, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=name and ''!=name ">
+                `name` = #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=hostComp and ''!=hostComp ">
+                host_comp = #{hostComp, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=fundComp and ''!=fundComp ">
+                fund_comp = #{fundComp, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=supportComp and ''!=supportComp ">
+                support_comp = #{supportComp, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=authObj and ''!=authObj ">
+                auth_obj = #{authObj, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=authNum and ''!=authNum ">
+                auth_num = #{authNum, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=place and ''!=place ">
+                place = #{place, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=startTime">
+                start_time = #{startTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=endTime">
+                end_time = #{endTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=area">
+                area = #{area, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=meetState and ''!=meetState ">
+                meet_state = #{meetState, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=foreign">
+                `foreign` = #{foreign, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=view1">
+                view1 = #{view1, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=view2">
+                view2 = #{view2, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=finanFrom">
+                finan_from = #{finanFrom, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=finanFund">
+                finan_fund = #{finanFund, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=leaderState">
+                leader_state = #{leaderState, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=activityBrief and ''!=activityBrief ">
+                activity_brief = #{activityBrief, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=meetPlanFileId and ''!=meetPlanFileId ">
+                meet_plan_file_id = #{meetPlanFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=authFileId and ''!=authFileId ">
+                auth_file_id = #{authFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=investmentPlanFileId and ''!=investmentPlanFileId ">
+                investment_plan_file_id = #{investmentPlanFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=checkState">
+                check_state = #{checkState, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=delete">
+                `delete` = #{delete, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                create_time = #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                update_time = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM easymeet
+        WHERE
+        id = #{id}
+    </select>
+
+    <select id="findAllNotCheckEasy" resultMap="BaseResultMap">
+        select * from easymeet where check_state = 0 and `delete` = 0
+    </select>
+
+    <update id="checkEasyMeet">
+        update easymeet set check_state = #{checkState}, admin_id = #{adminId}0 where id = #{id}
+    </update>
+
+    <select id="findsAll" resultMap="BaseResultMap">
+        select * from easymeet where `delete` = 0
+    </select>
+    <select id="findsByUserId" resultMap="BaseResultMap">
+        select * from easymeet where user_id = #{userId} and `delete` = 0
+    </select>
+
+</mapper>

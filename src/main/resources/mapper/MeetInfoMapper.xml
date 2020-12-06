@@ -10,7 +10,7 @@
         <result column="host_time" property="hostTime" />
         <result column="host_place" property="hostPlace" />
         <result column="host_company" property="hostCompany" />
-        <result column="position" property="position" />
+        <result column="positionNum" property="positionNum" />
         <result column="displayer_num" property="displayerNum" />
         <result column="turnover" property="turnover" />
     </resultMap>

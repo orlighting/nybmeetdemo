@@ -1,6 +1,6 @@
 package com.example.nybproject.meet.pojo;
 
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 

@@ -4,7 +4,6 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 详细申报，前后端交互使用

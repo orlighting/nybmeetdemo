@@ -1,8 +1,10 @@
 package com.example.nybproject.meet.pojo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -84,7 +86,7 @@ public class DetailMeet {
     /**
      * 展会内容
      */
-    private String meet_state;
+    private String meetState;
 
     /**
      * 是否邀请境外参展商或有关机构

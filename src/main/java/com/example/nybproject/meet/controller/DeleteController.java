@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * 删除数据相关控制
- *
+ * <p>
  * 为之后需求备用
  */
 @Controller
@@ -27,18 +27,17 @@ public class DeleteController {
     @CrossOrigin
     @RequestMapping("/message")
     @ResponseBody
-    public HttpResult<Void> deleteMessage(@RequestBody Message message){
+    public HttpResult<Void> deleteMessage(@RequestBody Message message) {
 
         int res = messageMapper.deleteMessageById(message.getId());
 
-        if(res == 1){
+        if (res == 1) {
             return HttpResult.of();
         }
 
         return HttpResult.of(HttpResultCodeEnum.SYSTEM_ERROR);
 
     }
-
 
 
 }

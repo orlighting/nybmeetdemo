@@ -1,43 +1,126 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-        <!DOCTYPE mapper
-                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.example.nybproject.meet.mapper.UserMapper">
-    <resultMap id="UserMap" type="com.example.nybproject.meet.pojo.User" >
-        <result column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="password" property="password" />
-        <result column="tele_num" property="teleNum" />
-        <result column="company" property="company" />
-        <result column="department" property="department" />
-        <result column="email" property="email" />
-        <result column="portraiture" property="portraiture" />
-        <result column="identity_card" property="identityCard" />
-        <result column="kind" property="kind" />
-        <result column="check_state" property="checkState" />
-        <result column="delete" property="delete" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+
+    <resultMap id="BaseResultMap" type="com.example.nybproject.meet.pojo.User">
+        <result property="id" column="id"/>
+        <result property="kind" column="kind"/>
+        <result property="meetAddr" column="meet_addr"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="delete" column="delete"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
-    <select id="findsById" resultMap="UserMap">
-        select * from user where id = #{id}
+
+    <sql id="Base_Column_List">
+        id ,kind ,meet_addr ,`name` ,password ,`delete` ,create_time ,update_time
+    </sql>
+
+    <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.User">
+        INSERT INTO user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                id  ,
+            </if>
+            <if test="null!=kind">
+                kind  ,
+            </if>
+            <if test="null!=meetAddr">
+                meet_addr  ,
+            </if>
+            <if test="null!=name">
+                `name`  ,
+            </if>
+            <if test="null!=password">
+                password  ,
+            </if>
+            <if test="null!=delete">
+                `delete`  ,
+            </if>
+            <if test="null!=createTime">
+                create_time  ,
+            </if>
+            <if test="null!=updateTime">
+                update_time
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null!=id">
+                #{id, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=kind">
+                #{kind, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=meetAddr">
+                #{meetAddr, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=name">
+                #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=password">
+                #{password, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=delete">
+                #{delete, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.nybproject.meet.pojo.User">
+        UPDATE user
+        <set>
+            <if test="null!=kind">
+                kind = #{kind, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=meetAddr and ''!=meetAddr ">
+                meet_addr = #{meetAddr, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=name and ''!=name ">
+                `name` = #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=password and ''!=password ">
+                password = #{password, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=delete">
+                `delete` = #{delete, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=createTime">
+                create_time = #{createTime, jdbcType=TIMESTAMP} ,
+            </if>
+            <if test="null!=updateTime">
+                update_time = #{updateTime, jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM user
+        WHERE
+        id = #{id}
     </select>
-    <select id="findAll" resultMap="UserMap">
+
+    <select id="findAll" resultMap="BaseResultMap">
         select * from user
     </select>
-    <select id="findForCheck" resultMap="UserMap">
-        select * from user where id = #{id} and password = #{password}
-    </select>
-    <select id="findNewId" resultType="java.lang.Integer">
-        select max(id) from user
-    </select>
-    <insert id="add">
-        insert into user (id, name, password, tele_num, company, department, email, portraiture, identity_card, kind, check_state, `delete`, create_time, update_time)
-        values (#{id}, #{name}, #{password}, #{teleNum}, #{company}, #{department}, #{email}, #{portraiture}, #{identityCard}, #{kind}, #{checkState}, #{delete}, #{createTime}, #{updateTime})
-    </insert>
+
     <select id="findsByIdentityCard" resultType="java.lang.Integer">
         select id from user where identity_card = #{identityCard}
     </select>
+
     <select id="findsByTeleNum" resultType="java.lang.Integer">
         select id from user where tele_num = #{teleNum}
     </select>

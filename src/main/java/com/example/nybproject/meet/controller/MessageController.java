@@ -1,8 +1,8 @@
 package com.example.nybproject.meet.controller;
 
 
-import com.example.nybproject.meet.mapper.DetailMapper;
-import com.example.nybproject.meet.mapper.EasyMapper;
+import com.example.nybproject.meet.mapper.DetailMeetMapper;
+import com.example.nybproject.meet.mapper.EasyMeetMapper;
 import com.example.nybproject.meet.mapper.MeetInfoMapper;
 import com.example.nybproject.meet.mapper.MessageMapper;
 import com.example.nybproject.meet.pojo.DetailMeet;
@@ -11,13 +11,11 @@ import com.example.nybproject.meet.pojo.MeetInfo;
 import com.example.nybproject.meet.pojo.Message;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
-import com.example.nybproject.meet.service.IdGenerater;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,13 +28,11 @@ import java.util.stream.Collectors;
 public class MessageController {
 
     @Resource
-    private IdGenerater idGenerater;
-    @Resource
     private MessageMapper messageMapper;
     @Resource
-    private EasyMapper easyMapper;
+    private EasyMeetMapper easyMeetMapper;
     @Resource
-    private DetailMapper detailMapper;
+    private DetailMeetMapper detailMeetMapper;
     @Resource
     private MeetInfoMapper meetInfoMapper;
 
@@ -49,13 +45,9 @@ public class MessageController {
     @ResponseBody
     public HttpResult<Void> sendMessage(@RequestBody Message message) {
 
-        message.setId(idGenerater.getMessageIdNow());
-        message.setCreateTime(LocalDateTime.now());
-        message.setUpdateTime(LocalDateTime.now());
-        message.setDelete(false);
         message.setLooked(false);
 
-        if (messageMapper.add(message) == 1) {
+        if (messageMapper.saveSelective(message) == 1) {
             return HttpResult.of();
         }
 
@@ -131,7 +123,7 @@ public class MessageController {
     @ResponseBody
     public HttpResult<List<EasyMeet>> easyState(@RequestBody JSONObject userId) {
 
-        List<EasyMeet> resEasyMeet = easyMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
+        List<EasyMeet> resEasyMeet = easyMeetMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
 
         if (resEasyMeet != null) {
             return HttpResult.of(resEasyMeet);
@@ -151,7 +143,7 @@ public class MessageController {
     @ResponseBody
     public HttpResult<List<DetailMeet>> detailState(@RequestBody JSONObject userId) {
 
-        List<DetailMeet> resDetailMeet = detailMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
+        List<DetailMeet> resDetailMeet = detailMeetMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
 
         if (resDetailMeet != null) {
             return HttpResult.of(resDetailMeet);
@@ -169,7 +161,7 @@ public class MessageController {
     @ResponseBody
     public HttpResult<Integer> easyNum() {
 
-        List<EasyMeet> resEasyMeet = easyMapper.findAllNotCheckEasy();
+        List<EasyMeet> resEasyMeet = easyMeetMapper.findAllNotCheckEasy();
         Integer count = resEasyMeet == null ? 0 : resEasyMeet.size();
         return HttpResult.of(count);
 
@@ -184,7 +176,7 @@ public class MessageController {
     @ResponseBody
     public HttpResult<Integer> detailNum() {
 
-        List<DetailMeet> resDetailMeet = detailMapper.findAllNotCheck();
+        List<DetailMeet> resDetailMeet = detailMeetMapper.findAllNotCheck();
         Integer count = resDetailMeet == null ? 0 : resDetailMeet.size();
         return HttpResult.of(count);
 
@@ -194,7 +186,7 @@ public class MessageController {
     @CrossOrigin
     @RequestMapping("/meetInfo")
     @ResponseBody
-    public HttpResult<List<MeetInfo>> meetInfo(){
+    public HttpResult<List<MeetInfo>> meetInfo() {
 
         return HttpResult.of(meetInfoMapper.findsAll());
 
