@@ -1,6 +1,5 @@
 package com.example.nybproject.meet.pojo;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
