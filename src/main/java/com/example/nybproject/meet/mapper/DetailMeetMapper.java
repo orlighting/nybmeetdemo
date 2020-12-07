@@ -30,6 +30,8 @@ public interface DetailMeetMapper {
      */
     DetailMeet getByPrimaryKey(Integer id);
 
+    DetailMeet findsLatest(String meetAddr);
+
     List<DetailMeet> findsByUserId(Integer userId);
 
     List<DetailMeet> findAllNotCheck();

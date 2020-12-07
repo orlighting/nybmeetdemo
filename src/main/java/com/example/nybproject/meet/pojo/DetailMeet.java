@@ -49,6 +49,11 @@ public class DetailMeet {
     private String supportComp;
 
     /**
+     * 指导单位
+     */
+    private String orderComp;
+
+    /**
      * 批准单位
      */
     private String authObj;
@@ -71,12 +76,12 @@ public class DetailMeet {
     /**
      * 开始时间
      */
-    private LocalDateTime startTime;
+    private String startTime;
 
     /**
      * 结束时间
      */
-    private LocalDateTime endTime;
+    private String endTime;
 
     /**
      * 展览面积
@@ -104,14 +109,19 @@ public class DetailMeet {
     private Boolean view2;
 
     /**
-     * 经费来源（财政拨款[0], 个人筹款[1], 财政拨款+个人筹款[2]）
+     * 经费来源（财政拨款[0], 个人筹款[1], 财政拨款+个人筹款[2]）已无效
      */
     private Integer finanFrom;
 
     /**
-     * 经费数额（单位：万元）
+     * 财政资金经费数额（单位：万元）
      */
     private Integer finanFund;
+
+    /**
+     * 自筹资金经费数额（单位：万元）
+     */
+    private Integer selfFund;
 
     /**
      * 出席领导情况

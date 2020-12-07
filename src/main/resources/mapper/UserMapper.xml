@@ -113,6 +113,14 @@
         id = #{id}
     </select>
 
+    <select id="getByMeetAddr" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM user
+        WHERE
+        meet_addr = #{meetAddr}
+    </select>
+
     <select id="findAll" resultMap="BaseResultMap">
         select * from user
     </select>

@@ -6,9 +6,11 @@ import com.example.nybproject.meet.mapper.SummaryMapper;
 import com.example.nybproject.meet.pojo.DetailMeet;
 import com.example.nybproject.meet.pojo.EasyMeet;
 import com.example.nybproject.meet.pojo.Summary;
+import com.example.nybproject.meet.pojo.User;
 import com.example.nybproject.meet.result.HttpResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,6 +27,29 @@ public class SearchController {
     EasyMeetMapper easyMeetMapper;
     @Resource
     SummaryMapper summaryMapper;
+
+    @CrossOrigin
+    @RequestMapping("/easy")
+    @ResponseBody
+    public HttpResult<EasyMeet> latestEasyMeet(@RequestBody User user){
+
+        EasyMeet easyMeet = easyMeetMapper.findsLatest(user.getMeetAddr());
+
+        return HttpResult.of(easyMeet);
+    }
+
+    @CrossOrigin
+    @RequestMapping("/detail")
+    @ResponseBody
+    public HttpResult<DetailMeet> latestDetailMeet(@RequestBody User user){
+
+        DetailMeet detailMeet = detailMeetMapper.findsLatest(user.getMeetAddr());
+
+        return HttpResult.of(detailMeet);
+
+    }
+
+
 
     /**
      * 查出所有的详细申报表单返回前端

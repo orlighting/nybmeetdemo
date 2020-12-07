@@ -1,14 +1,8 @@
 package com.example.nybproject.meet.controller;
 
 
-import com.example.nybproject.meet.mapper.DetailMeetMapper;
-import com.example.nybproject.meet.mapper.EasyMeetMapper;
-import com.example.nybproject.meet.mapper.MeetInfoMapper;
-import com.example.nybproject.meet.mapper.MessageMapper;
-import com.example.nybproject.meet.pojo.DetailMeet;
-import com.example.nybproject.meet.pojo.EasyMeet;
-import com.example.nybproject.meet.pojo.MeetInfo;
-import com.example.nybproject.meet.pojo.Message;
+import com.example.nybproject.meet.mapper.*;
+import com.example.nybproject.meet.pojo.*;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
 import net.sf.json.JSONObject;
@@ -35,6 +29,8 @@ public class MessageController {
     private DetailMeetMapper detailMeetMapper;
     @Resource
     private MeetInfoMapper meetInfoMapper;
+    @Resource
+    private UserMapper userMapper;
 
     /**
      * @param message
@@ -56,17 +52,33 @@ public class MessageController {
     }
 
     /**
-     * @param userId
+     * @param user
+     * @return 向前端返回userId
+     */
+    @CrossOrigin
+    @RequestMapping("/getUserId")
+    @ResponseBody
+    public HttpResult<Integer> getUserId(@RequestBody User user){
+
+        User resUser = userMapper.getByMeetAddr(user.getMeetAddr());
+
+        return HttpResult.of(resUser.getId());
+
+    }
+
+
+    /**
+     * @param user
      * @return 向前端返回所有已读邮件
      */
     @CrossOrigin
     @RequestMapping("/looked")
     @ResponseBody
-    public HttpResult<List<Message>> lookedMessage(@RequestBody JSONObject userId) {
+    public HttpResult<List<Message>> lookedMessage(@RequestBody User user) {
 
-        System.out.println(userId);
+        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
 
-        List<Message> resMessage = messageMapper.findsLookedMessage(Integer.parseInt(userId.get("userId").toString()));
+        List<Message> resMessage = messageMapper.findsLookedMessage(userId);
 
         if (resMessage != null) {
             return HttpResult.of(resMessage);
@@ -77,15 +89,17 @@ public class MessageController {
     }
 
     /**
-     * @param userId
+     * @param user
      * @return 向前端返回所有未读邮件
      */
     @CrossOrigin
     @RequestMapping("/notLook")
     @ResponseBody
-    public HttpResult<List<Message>> notLookMessage(@RequestBody JSONObject userId) {
+    public HttpResult<List<Message>> notLookMessage(@RequestBody User user) {
 
-        List<Message> resMessage = messageMapper.findsNotLookMessage(Integer.parseInt(userId.get("userId").toString()));
+        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
+
+        List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
 
         if (!resMessage.isEmpty()) {
             List<Integer> ids = resMessage.stream()
@@ -100,30 +114,36 @@ public class MessageController {
     }
 
     /**
-     * @param userId
+     * @param user
      * @return 向前端返回所有未读邮件的数量
      */
     @CrossOrigin
     @RequestMapping("/notLookCount")
     @ResponseBody
-    public HttpResult<Integer> notLookMessageCount(@RequestBody JSONObject userId) {
+    public HttpResult<Integer> notLookMessageCount(@RequestBody User user) {
 
-        List<Message> resMessage = messageMapper.findsNotLookMessage(Integer.parseInt(userId.get("userId").toString()));
+        System.out.println(user.getMeetAddr()+123);
+
+        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
+
+        List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
         Integer count = resMessage == null ? 0 : resMessage.size();
 
         return HttpResult.of(count);
     }
 
     /**
-     * @param userId
+     * @param user
      * @return 向前端返回本账户下的所有简易申报信息
      */
     @CrossOrigin
     @RequestMapping("/easyState")
     @ResponseBody
-    public HttpResult<List<EasyMeet>> easyState(@RequestBody JSONObject userId) {
+    public HttpResult<List<EasyMeet>> easyState(@RequestBody User user) {
 
-        List<EasyMeet> resEasyMeet = easyMeetMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
+        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
+
+        List<EasyMeet> resEasyMeet = easyMeetMapper.findsByUserId(userId);
 
         if (resEasyMeet != null) {
             return HttpResult.of(resEasyMeet);
@@ -135,15 +155,17 @@ public class MessageController {
 
 
     /**
-     * @param userId
+     * @param user
      * @return 向前端返回本账户下的所有详细申报信息
      */
     @CrossOrigin
     @RequestMapping("/detailState")
     @ResponseBody
-    public HttpResult<List<DetailMeet>> detailState(@RequestBody JSONObject userId) {
+    public HttpResult<List<DetailMeet>> detailState(@RequestBody User user) {
 
-        List<DetailMeet> resDetailMeet = detailMeetMapper.findsByUserId(Integer.parseInt(userId.get("userId").toString()));
+        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
+
+        List<DetailMeet> resDetailMeet = detailMeetMapper.findsByUserId(userId);
 
         if (resDetailMeet != null) {
             return HttpResult.of(resDetailMeet);

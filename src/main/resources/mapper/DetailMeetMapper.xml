@@ -13,6 +13,7 @@
         <result property="hostComp" column="host_comp"/>
         <result property="fundComp" column="fund_comp"/>
         <result property="supportComp" column="support_comp"/>
+        <result property="orderComp" column="orderComp" />
         <result property="authObj" column="auth_obj"/>
         <result property="authNum" column="auth_num"/>
         <result property="place" column="place"/>
@@ -26,6 +27,7 @@
         <result property="view2" column="view2"/>
         <result property="finanFrom" column="finan_from"/>
         <result property="finanFund" column="finan_fund"/>
+        <result property="selfFund" column="self_fund"/>
         <result property="leaderState" column="leader_state"/>
         <result property="activityBrief" column="activity_brief"/>
         <result property="investmentPlanFileId" column="investment_plan_file_id"/>
@@ -40,7 +42,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id ,meet_addr ,admin_id ,`name` ,host_comp ,fund_comp ,support_comp ,auth_obj ,auth_num ,place ,`cycle` ,start_time ,end_time ,area ,meet_state ,`foreign` ,view1 ,view2 ,finan_from ,finan_fund ,leader_state ,activity_brief ,investment_plan_file_id ,feasibility_file_id ,meet_plan_file_id ,condition_state_file_id ,auth_file_id ,check_state ,`delete` ,create_time ,update_time
+        id ,meet_addr ,admin_id ,`name` ,host_comp ,fund_comp ,support_comp ,order_comp, auth_obj ,auth_num ,place ,`cycle` ,start_time ,end_time ,area ,meet_state ,`foreign` ,view1 ,view2 ,finan_from ,finan_fund ,self_fund ,leader_state ,activity_brief ,investment_plan_file_id ,feasibility_file_id ,meet_plan_file_id ,condition_state_file_id ,auth_file_id ,check_state ,`delete` ,create_time ,update_time
     </sql>
 
     <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.DetailMeet">
@@ -66,6 +68,9 @@
             </if>
             <if test="null!=supportComp">
                 support_comp  ,
+            </if>
+            <if test="null!=orderComp">
+                order_comp  ,
             </if>
             <if test="null!=authObj">
                 auth_obj  ,
@@ -105,6 +110,9 @@
             </if>
             <if test="null!=finanFund">
                 finan_fund  ,
+            </if>
+            <if test="null!=selfFund">
+                self_fund  ,
             </if>
             <if test="null!=leaderState">
                 leader_state  ,
@@ -162,6 +170,9 @@
             <if test="null!=supportComp">
                 #{supportComp, jdbcType=VARCHAR} ,
             </if>
+            <if test="null!=orderComp">
+                #{orderComp, jdbcType=VARCHAR} ,
+            </if>
             <if test="null!=authObj">
                 #{authObj, jdbcType=VARCHAR} ,
             </if>
@@ -175,10 +186,10 @@
                 #{cycle, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=startTime">
-                #{startTime, jdbcType=TIMESTAMP} ,
+                #{startTime, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=endTime">
-                #{endTime, jdbcType=TIMESTAMP} ,
+                #{endTime, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=area">
                 #{area, jdbcType=INTEGER} ,
@@ -200,6 +211,9 @@
             </if>
             <if test="null!=finanFund">
                 #{finanFund, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=selfFund">
+                #{selfFund, jdbcType=INTEGER} ,
             </if>
             <if test="null!=leaderState">
                 #{leaderState, jdbcType=VARCHAR} ,
@@ -258,6 +272,9 @@
             <if test="null!=supportComp and ''!=supportComp ">
                 support_comp = #{supportComp, jdbcType=VARCHAR} ,
             </if>
+            <if test="null!=orderComp and ''!=orderComp ">
+                order_comp = #{orderComp, jdbcType=VARCHAR} ,
+            </if>
             <if test="null!=authObj and ''!=authObj ">
                 auth_obj = #{authObj, jdbcType=VARCHAR} ,
             </if>
@@ -271,10 +288,10 @@
                 `cycle` = #{cycle, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=startTime">
-                start_time = #{startTime, jdbcType=TIMESTAMP} ,
+                start_time = #{startTime, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=endTime">
-                end_time = #{endTime, jdbcType=TIMESTAMP} ,
+                end_time = #{endTime, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=area">
                 area = #{area, jdbcType=INTEGER} ,
@@ -296,6 +313,9 @@
             </if>
             <if test="null!=finanFund">
                 finan_fund = #{finanFund, jdbcType=INTEGER} ,
+            </if>
+            <if test="null!=selfFund">
+                self_fund = #{selfFund, jdbcType=INTEGER} ,
             </if>
             <if test="null!=leaderState and ''!=leaderState ">
                 leader_state = #{leaderState, jdbcType=VARCHAR} ,
@@ -354,6 +374,14 @@
 
     <select id="findAllNotCheck" resultMap="BaseResultMap">
         select * from detailmeet where check_state in (0,1) and `delete` = 0
+    </select>
+
+    <select id="findsLatest" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM detailmeet
+        WHERE
+        id IN (SELECT MAX(id) WHERE meet_addr = #{meetAddr})
     </select>
 
     <update id="checkDetailMeet">

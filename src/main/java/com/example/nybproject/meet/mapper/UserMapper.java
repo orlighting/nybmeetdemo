@@ -30,6 +30,15 @@ public interface UserMapper {
      */
     User getByPrimaryKey(Integer id);
 
+    /**
+     * 根据展会简称查询一条记录
+     * @param meetAddr
+     * @return po
+     */
+    User getByMeetAddr(String meetAddr);
+
+
+
     List<User> findAll();
 
     Integer findsByIdentityCard(String identityCard);

@@ -30,9 +30,9 @@ public class LoginController {
     @PostMapping("/user")
     @ResponseBody
     public HttpResult<User> userLogin(@RequestBody User user) {
-        Integer id = user.getId();
+        String meetAddr = user.getMeetAddr();
 
-        User resUser = userMapper.getByPrimaryKey(id);
+        User resUser = userMapper.getByMeetAddr(meetAddr);
         if (resUser == null) {
             return HttpResult.of(HttpResultCodeEnum.LOGIN_FAIL);
         } else if (Objects.equals(resUser.getPassword(), user.getPassword())) {

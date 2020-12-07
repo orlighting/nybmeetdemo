@@ -31,6 +31,8 @@ public interface EasyMeetMapper {
      */
     EasyMeet getByPrimaryKey(Integer id);
 
+    EasyMeet findsLatest(String meetAddr);
+
     int checkEasyMeet(Integer id, Integer checkState, Integer adminId);
 
     List<EasyMeet> findAllNotCheckEasy();

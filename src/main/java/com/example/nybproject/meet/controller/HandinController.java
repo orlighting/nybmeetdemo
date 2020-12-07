@@ -7,6 +7,7 @@ import com.example.nybproject.meet.pojo.*;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
 import com.example.nybproject.meet.util.JsonUtil;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -41,47 +42,53 @@ public class HandinController {
     private SummaryMapper summaryMapper;
 
     /**
-     * @param easyMeet
-     * @return 用户提交简易申报的接口，先判断其详细申报id是否正确，是否对应正确的详细申报，之后入库
+     * @param resEasyMeet
+     * @return
      */
     @CrossOrigin
     @PostMapping("/easy")
     @ResponseBody
-    public HttpResult<Void> easy(@RequestBody EasyMeet easyMeet) {
+    public HttpResult<Void> easy(@RequestBody ResEasyMeet resEasyMeet) {
+        try{
+            MultipartFile investmentPlanFile = resEasyMeet.getInvestmentPlanFile();
+            MultipartFile meetPlanFile = resEasyMeet.getMeetPlanFile();
+            MultipartFile authFile = resEasyMeet.getAuthFile();
 
-        DetailMeet detailMeet = detailMeetMapper.getByPrimaryKey(easyMeet.getDmeetId());
-        if (detailMeet == null) {
-            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
-        }
+            resEasyMeet.setInvestmentPlanFileId(saveFileToMongo(investmentPlanFile));
+            resEasyMeet.setMeetPlanFileId(saveFileToMongo(meetPlanFile));
+            resEasyMeet.setAuthFileId(saveFileToMongo(authFile));
 
-        if (!Objects.equals(detailMeet.getUserId(), easyMeet.getUserId()) || detailMeet.getCheckState() != 2) {
-            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
-        }
-
-        easyMeet.setAdminId(0);
-        easyMeet.setCheckState(0);
-
-        if (easyMeetMapper.saveSelective(easyMeet) == 1) {
+            easyMeetMapper.saveSelective(JsonUtil.convertObject(resEasyMeet, EasyMeet.class));
             return HttpResult.of();
+        } catch (Exception e){
+            log.error("HandinController中easy方法出错", e);
         }
 
         return HttpResult.of(HttpResultCodeEnum.SYSTEM_ERROR);
 
     }
 
+    /**
+     * @param resDetailMeet
+     * @return
+     */
     @CrossOrigin
     @PostMapping("/detail")
     @ResponseBody
     public HttpResult<Void> detail(ResDetailMeet resDetailMeet) {
         try {
-            MultipartFile preExpoFile = resDetailMeet.getPreExpoFile();
             MultipartFile investmentPlanFile = resDetailMeet.getInvestmentPlanFile();
-            // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
-            resDetailMeet.setPreExpoFileId(saveFileToMongo(preExpoFile));
+            MultipartFile feasibilityFile = resDetailMeet.getFeasibilityFile();
+            MultipartFile meetPlanFile = resDetailMeet.getMeetPlanFile();
+            MultipartFile conditionStateFile = resDetailMeet.getConditionStateFile();
+            MultipartFile authFile = resDetailMeet.getAuthFile();
+            // 先保存五个文件到mongo,获得对应的ID后，将其他数据保存到mysql
+
             resDetailMeet.setInvestmentPlanFileId(saveFileToMongo(investmentPlanFile));
-            resDetailMeet.setCreateTime(LocalDateTime.now());
-            resDetailMeet.setUpdateTime(LocalDateTime.now());
-            resDetailMeet.setCheckState(0);
+            resDetailMeet.setFeasibilityFileId(saveFileToMongo(feasibilityFile));
+            resDetailMeet.setMeetPlanFileId(saveFileToMongo(meetPlanFile));
+            resDetailMeet.setConditionStateFileId(saveFileToMongo(conditionStateFile));
+            resDetailMeet.setAuthFileId(saveFileToMongo(authFile));
 
             detailMeetMapper.saveSelective(JsonUtil.convertObject(resDetailMeet, DetailMeet.class));
             return HttpResult.of();
@@ -91,30 +98,22 @@ public class HandinController {
         }
     }
 
+    /**
+     * @param resSummary
+     * @return
+     */
     @CrossOrigin
     @RequestMapping("/summary")
     @ResponseBody
     public HttpResult<Void> summary(ResSummary resSummary) {
 
-        DetailMeet detailMeet = detailMeetMapper.getByPrimaryKey(resSummary.getDetailId());
-
-        if (detailMeet == null) {
-            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
-        }
-
-        System.out.println(detailMeet.getUserId());
-        System.out.println(detailMeet.getId());
-        System.out.println(detailMeet.getCheckState());
-
-        if (!Objects.equals(detailMeet.getUserId(), resSummary.getUserId()) || detailMeet.getCheckState() != 2) {
-            return HttpResult.of(HttpResultCodeEnum.NONE_DETAIL_MEET_ACCESS);
-        }
-
         try {
             if (resSummary.getKind() != 2) {
                 MultipartFile summaryFile = resSummary.getSummaryFile();
+                MultipartFile hosterSign = resSummary.getHosterSignFile();
                 // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
                 resSummary.setSummaryFileId(saveFileToMongo(summaryFile));
+                resSummary.setHosterSignFileId(saveFileToMongo(hosterSign));
             }
 
             summaryMapper.saveSelective(JsonUtil.convertObject(resSummary, Summary.class));
