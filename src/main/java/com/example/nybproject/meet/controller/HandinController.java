@@ -45,7 +45,7 @@ public class HandinController {
     @CrossOrigin
     @PostMapping("/easy")
     @ResponseBody
-    public HttpResult<Void> easy(@RequestBody ResEasyMeet resEasyMeet) {
+    public HttpResult<Void> easy(ResEasyMeet resEasyMeet) {
         try{
             MultipartFile investmentPlanFile = resEasyMeet.getInvestmentPlanFile();
             MultipartFile meetPlanFile = resEasyMeet.getMeetPlanFile();
@@ -105,13 +105,11 @@ public class HandinController {
     public HttpResult<Void> summary(ResSummary resSummary) {
 
         try {
-            if (resSummary.getKind() != 2) {
-                MultipartFile summaryFile = resSummary.getSummaryFile();
-                MultipartFile hosterSign = resSummary.getHosterSignFile();
-                // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
-                resSummary.setSummaryFileId(saveFileToMongo(summaryFile));
-                resSummary.setHosterSignFileId(saveFileToMongo(hosterSign));
-            }
+            MultipartFile summaryFile = resSummary.getSummaryFile();
+            MultipartFile hosterSign = resSummary.getHosterSignFile();
+            // 先保存两个文件到mongo,获得对应的ID后，将其他数据保存到mysql
+            resSummary.setSummaryFileId(saveFileToMongo(summaryFile));
+            resSummary.setHosterSignFileId(saveFileToMongo(hosterSign));
 
             summaryMapper.saveSelective(JsonUtil.convertObject(resSummary, Summary.class));
             return HttpResult.of();

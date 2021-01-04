@@ -37,9 +37,11 @@ public interface EasyMeetMapper {
 
     List<EasyMeet> findAllNotCheckEasy();
 
-    List<EasyMeet> findsByUserId(Integer userId);
+    List<EasyMeet> findsByMeetAddr(String meetAddr);
 
     List<EasyMeet> findsAll();
+
+    List<EasyMeet> selectByKeyValue(EasyMeet easyMeet);
 
 }
 

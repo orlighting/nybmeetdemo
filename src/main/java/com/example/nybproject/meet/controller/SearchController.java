@@ -96,4 +96,6 @@ public class SearchController {
         return HttpResult.of(resSummary);
     }
 
+
+
 }

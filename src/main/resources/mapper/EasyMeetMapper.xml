@@ -13,7 +13,7 @@
         <result property="hostComp" column="host_comp"/>
         <result property="fundComp" column="fund_comp"/>
         <result property="supportComp" column="support_comp"/>
-        <result property="orderComp" column="orderComp" />
+        <result property="orderComp" column="order_comp" />
         <result property="authObj" column="auth_obj"/>
         <result property="authNum" column="auth_num"/>
         <result property="place" column="place"/>
@@ -344,15 +344,46 @@
     <select id="findsAll" resultMap="BaseResultMap">
         select * from easymeet where `delete` = 0
     </select>
-    <select id="findsByUserId" resultMap="BaseResultMap">
-        select * from easymeet where user_id = #{userId} and `delete` = 0
+    <select id="findsByMeetAddr" resultMap="BaseResultMap">
+        select * from easymeet where meet_addr = #{MeetAddr} and `delete` = 0
     </select>
     <select id="findsLatest" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
         FROM easymeet
+        WHERE meet_addr = #{meetAddr}
+        ORDER BY id DESC LIMIT 1
+    </select>
+
+    <select id="selectBykeyValue" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM easymeet
         WHERE
-        id IN (SELECT MAX(id) WHERE meet_addr = #{meetAddr})
+        <if test="null!=meetAddr and ''!=meetAddr ">
+            meet_addr = #{meetAddr, jdbcType=VARCHAR} ,
+        </if>
+        <if test="null!=adminId">
+            admin_id = #{adminId, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=name and ''!=name ">
+            `name` = #{name, jdbcType=VARCHAR} ,
+        </if>
+        <if test="null!=startTime">
+            start_time = #{startTime, jdbcType=VARCHAR} ,
+        </if>
+        <if test="null!=endTime">
+            end_time = #{endTime, jdbcType=VARCHAR} ,
+        </if>
+        <if test="null!=area">
+            area > #{area, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=checkState">
+            check_state = #{checkState, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=delete">
+            `delete` = #{delete, jdbcType=TINYINT} ,
+        </if>
     </select>
 
 </mapper>

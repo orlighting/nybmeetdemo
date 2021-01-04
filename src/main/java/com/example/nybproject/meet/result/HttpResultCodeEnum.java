@@ -25,6 +25,7 @@ public enum HttpResultCodeEnum {
      */
     ACCOUNT_REGISTER_ID_CARD_REPEAT(3001,"身份证号已被注册"),
     ACCOUNT_REGISTER_MOBILE_REPEAT(3002,"手机号已被注册"),
+    NONE_REQUEST_ACCOUNT(3003, "指定用户不存在"),
     /**
      * 审核相关
      */
@@ -41,7 +42,8 @@ public enum HttpResultCodeEnum {
     /**
      * 其他
      */
-    NONE_DETAIL_MEET_ACCESS(6001, "没有与之对应的详细申报")
+    NONE_DETAIL_MEET_ACCESS(6001, "没有与之对应的详细申报"),
+    OLD_PASSWORD_FALSE(6002, "密码错误")
 
     /**
      * TODO 待进一步完善

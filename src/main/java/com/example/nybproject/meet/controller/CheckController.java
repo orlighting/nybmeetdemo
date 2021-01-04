@@ -85,6 +85,9 @@ public class CheckController {
     @ResponseBody
     public HttpResult<List<DetailMeet>> detailList() {
         List<DetailMeet> reqEasyMeet = detailMeetMapper.findAllNotCheck();
+
+
+
         return HttpResult.of(reqEasyMeet);
     }
 

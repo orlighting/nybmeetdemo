@@ -248,4 +248,35 @@
         select * from summary where `delete` = 0
     </select>
 
+    <select id="selectBykeyValue" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM summary
+        WHERE
+        <if test="null!=meetId">
+            meet_id = #{meetId, jdbcType=BIGINT} ,
+        </if>
+        <if test="null!=countryNum">
+            country_num > #{countryNum, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=companyNum">
+            company_num > #{companyNum, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=area">
+            area > #{area, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=buyerNum">
+            buyer_num > #{buyerNum, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=mediaNum">
+            media_num > #{mediaNum, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=turnover">
+            turnover > #{turnover, jdbcType=INTEGER} ,
+        </if>
+        <if test="null!=kind">
+            kind = #{kind, jdbcType=INTEGER} ,
+        </if>
+    </select>
+
 </mapper>

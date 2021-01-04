@@ -123,7 +123,7 @@ public class MessageController {
 
         System.out.println(user.getMeetAddr()+123);
 
-        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
+         Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
 
         List<Message> resMessage = messageMapper.findsNotLookMessage(userId);
         Integer count = resMessage == null ? 0 : resMessage.size();
@@ -140,9 +140,7 @@ public class MessageController {
     @ResponseBody
     public HttpResult<List<EasyMeet>> easyState(@RequestBody User user) {
 
-        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
-
-        List<EasyMeet> resEasyMeet = easyMeetMapper.findsByUserId(userId);
+        List<EasyMeet> resEasyMeet = easyMeetMapper.findsByMeetAddr(user.getMeetAddr());
 
         if (resEasyMeet != null) {
             return HttpResult.of(resEasyMeet);
@@ -162,9 +160,7 @@ public class MessageController {
     @ResponseBody
     public HttpResult<List<DetailMeet>> detailState(@RequestBody User user) {
 
-        Integer userId = userMapper.getByMeetAddr(user.getMeetAddr()).getId();
-
-        List<DetailMeet> resDetailMeet = detailMeetMapper.findsByUserId(userId);
+        List<DetailMeet> resDetailMeet = detailMeetMapper.findsByMeetAddr(user.getMeetAddr());
 
         if (resDetailMeet != null) {
             return HttpResult.of(resDetailMeet);

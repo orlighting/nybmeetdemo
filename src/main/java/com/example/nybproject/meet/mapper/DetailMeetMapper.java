@@ -32,11 +32,13 @@ public interface DetailMeetMapper {
 
     DetailMeet findsLatest(String meetAddr);
 
-    List<DetailMeet> findsByUserId(Integer userId);
+    List<DetailMeet> findsByMeetAddr(String meetAddr);
 
     List<DetailMeet> findAllNotCheck();
 
     List<DetailMeet> findsAll();
 
     int checkDetailMeet(Integer id, Integer checkState, Integer adminId);
+
+    List<DetailMeet> selectByKeyValue(DetailMeet detailMeet);
 }
