@@ -17,6 +17,7 @@
         <result property="authObj" column="auth_obj"/>
         <result property="authNum" column="auth_num"/>
         <result property="place" column="place"/>
+        <result property="chooseCity" column="choose_city"/>
         <result property="cycle" column="cycle"/>
         <result property="startTime" column="start_time"/>
         <result property="endTime" column="end_time"/>
@@ -30,11 +31,16 @@
         <result property="selfFund" column="self_fund"/>
         <result property="leaderState" column="leader_state"/>
         <result property="activityBrief" column="activity_brief"/>
+        <result property="writeObject" column="write_object"/>
+        <result property="department" column="department"/>
+        <result property="charger" column="charger"/>
+        <result property="teleNum" column="tele_num"/>
         <result property="investmentPlanFileId" column="investment_plan_file_id"/>
         <result property="feasibilityFileId" column="feasibility_file_id"/>
         <result property="meetPlanFileId" column="meet_plan_file_id"/>
         <result property="conditionStateFileId" column="condition_state_file_id"/>
         <result property="authFileId" column="auth_file_id"/>
+        <result property="summaryDone" column="summary_done"/>
         <result property="checkState" column="check_state"/>
         <result property="delete" column="delete"/>
         <result property="createTime" column="create_time"/>
@@ -42,7 +48,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id ,meet_addr ,admin_id ,`name` ,host_comp ,fund_comp ,support_comp ,order_comp, auth_obj ,auth_num ,place ,`cycle` ,start_time ,end_time ,area ,meet_state ,`foreign` ,view1 ,view2 ,finan_from ,finan_fund ,self_fund ,leader_state ,activity_brief ,investment_plan_file_id ,feasibility_file_id ,meet_plan_file_id ,condition_state_file_id ,auth_file_id ,check_state ,`delete` ,create_time ,update_time
+        id ,meet_addr ,admin_id ,`name` ,host_comp ,fund_comp ,support_comp ,order_comp, auth_obj ,auth_num ,place ,choose_city ,`cycle` ,start_time ,end_time ,area ,meet_state ,`foreign` ,view1 ,view2 ,finan_from ,finan_fund ,self_fund ,leader_state ,activity_brief ,write_object ,department ,charger ,tele_num ,investment_plan_file_id ,feasibility_file_id ,meet_plan_file_id ,condition_state_file_id ,auth_file_id ,summary_done ,check_state ,`delete` ,create_time ,update_time
     </sql>
 
     <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.DetailMeet">
@@ -80,6 +86,21 @@
             </if>
             <if test="null!=place">
                 place  ,
+            </if>
+            <if test="null!=chooseCity">
+                choose_city  ,
+            </if>
+            <if test="null!=writeObject">
+                write_object  ,
+            </if>
+            <if test="null!=department">
+                department  ,
+            </if>
+            <if test="null!=charger">
+                charger  ,
+            </if>
+            <if test="null!=teleNum">
+                tele_num  ,
             </if>
             <if test="null!=cycle">
                 `cycle`  ,
@@ -135,6 +156,9 @@
             <if test="null!=authFileId">
                 auth_file_id  ,
             </if>
+            <if test="null!=summaryDone">
+                summary_done  ,
+            </if>
             <if test="null!=checkState">
                 check_state  ,
             </if>
@@ -181,6 +205,21 @@
             </if>
             <if test="null!=place">
                 #{place, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=chooseCity">
+                #{chooseCity, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=writeObject">
+                #{writeObject, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=department">
+                #{department, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=charger">
+                #{charger, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=teleNum">
+                #{teleNum, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=cycle">
                 #{cycle, jdbcType=VARCHAR} ,
@@ -236,6 +275,9 @@
             <if test="null!=authFileId">
                 #{authFileId, jdbcType=VARCHAR} ,
             </if>
+            <if test="null!=summaryDone">
+                #{summaryDone, jdbcType=VARCHAR} ,
+            </if>
             <if test="null!=checkState">
                 #{checkState, jdbcType=INTEGER} ,
             </if>
@@ -283,6 +325,21 @@
             </if>
             <if test="null!=place and ''!=place ">
                 place = #{place, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=chooseCity and ''!=chooseCity ">
+                choose_city = #{chooseCity, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=writeObject and ''!=writeObject ">
+                write_object = #{writeObject, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=department and ''!=department ">
+                department = #{department, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=charger and ''!=charger ">
+                charger = #{charger, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=teleNum and ''!=teleNum ">
+                tele_num = #{teleNum, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=cycle and ''!=cycle ">
                 `cycle` = #{cycle, jdbcType=VARCHAR} ,
@@ -337,6 +394,9 @@
             </if>
             <if test="null!=authFileId and ''!=authFileId ">
                 auth_file_id = #{authFileId, jdbcType=VARCHAR} ,
+            </if>
+            <if test="null!=summaryDone and ''!=summaryDone ">
+                summary_done = #{summaryDone, jdbcType=VARCHAR} ,
             </if>
             <if test="null!=checkState">
                 check_state = #{checkState, jdbcType=INTEGER} ,

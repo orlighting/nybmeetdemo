@@ -10,6 +10,7 @@
         <result property="kind" column="kind"/>
         <result property="meetAddr" column="meet_addr"/>
         <result property="name" column="name"/>
+        <result property="isFreeze" column="is_freeze"/>
         <result property="password" column="password"/>
         <result property="delete" column="delete"/>
         <result property="createTime" column="create_time"/>
@@ -17,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id ,kind ,meet_addr ,`name` ,password ,`delete` ,create_time ,update_time
+        id ,kind ,meet_addr ,`name` ,password ,`delete` ,is_freeze ,create_time ,update_time
     </sql>
 
     <insert id="saveSelective"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.example.nybproject.meet.pojo.User">
@@ -40,6 +41,9 @@
             </if>
             <if test="null!=delete">
                 `delete`  ,
+            </if>
+            <if test="null!=isFreeze">
+                is_freeze  ,
             </if>
             <if test="null!=createTime">
                 create_time  ,
@@ -67,6 +71,9 @@
             <if test="null!=delete">
                 #{delete, jdbcType=TINYINT} ,
             </if>
+            <if test="null!=isFreeze">
+                #{isFreeze, jdbcType=TINYINT} ,
+            </if>
             <if test="null!=createTime">
                 #{createTime, jdbcType=TIMESTAMP} ,
             </if>
@@ -93,6 +100,9 @@
             </if>
             <if test="null!=delete">
                 `delete` = #{delete, jdbcType=TINYINT} ,
+            </if>
+            <if test="null!=isFreeze">
+                is_freeze = #{isFreeze, jdbcType=TINYINT} ,
             </if>
             <if test="null!=createTime">
                 create_time = #{createTime, jdbcType=TIMESTAMP} ,

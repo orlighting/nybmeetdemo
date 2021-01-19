@@ -64,6 +64,11 @@ public class ResEasyMeet {
     private String place;
 
     /**
+     * 举办城市
+     */
+    private String chooseCity;
+
+    /**
      * 开始时间
      */
     private String startTime;
@@ -124,6 +129,26 @@ public class ResEasyMeet {
     private String activityBrief;
 
     /**
+     * 填写单位
+     */
+    private String writeObject;
+
+    /**
+     * 负责处室
+     */
+    private String department;
+
+    /**
+     * 负责人
+     */
+    private String charger;
+
+    /**
+     * 电话号码
+     */
+    private String teleNum;
+
+    /**
      * 招展招商方案文档id
      */
     private String investmentPlanFileId;
@@ -137,6 +162,11 @@ public class ResEasyMeet {
      * 上级单位审核意见文件id
      */
     private String authFileId;
+
+    /**
+     * 是否完成总结提交
+     */
+    private Boolean summaryDone;
 
     /**
      * 审核状态（“审核中[0]”、“已通过，展会计划待过会[1]”、“已通过，展会计划已印发[2]”、“未通过，返回修改[3]”）

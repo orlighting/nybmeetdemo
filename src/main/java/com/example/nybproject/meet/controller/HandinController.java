@@ -112,6 +112,23 @@ public class HandinController {
             resSummary.setHosterSignFileId(saveFileToMongo(hosterSign));
 
             summaryMapper.saveSelective(JsonUtil.convertObject(resSummary, Summary.class));
+
+            EasyMeet tmpEasyMeet = easyMeetMapper.findsLatest(resSummary.getMeetAddr());
+            if(tmpEasyMeet != null){
+                EasyMeet changedEasyMeet = new EasyMeet();
+                changedEasyMeet.setId(tmpEasyMeet.getId());
+                changedEasyMeet.setSummaryDone(true);
+
+                easyMeetMapper.updateByPrimaryKeySelective(changedEasyMeet);
+            }
+            else{
+                DetailMeet tmpDetailMeet = detailMeetMapper.findsLatest(resSummary.getMeetAddr());
+                DetailMeet changedDetailMeet = new DetailMeet();
+                changedDetailMeet.setId(tmpDetailMeet.getId());
+                changedDetailMeet.setSummaryDone(true);
+
+                detailMeetMapper.updateByPrimaryKeySelective(changedDetailMeet);
+            }
             return HttpResult.of();
         } catch (Exception e) {
             log.error("HandinController中summary方法出错", e);

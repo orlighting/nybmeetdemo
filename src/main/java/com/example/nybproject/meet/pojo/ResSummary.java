@@ -25,6 +25,11 @@ public class ResSummary {
     private Integer adminId;
 
     /**
+     * 展会简称
+     */
+    private String meetAddr;
+
+    /**
      * 参展国家地区数量
      */
     private Integer countryNum;
@@ -65,6 +70,16 @@ public class ResSummary {
     private Integer turnover;
 
     /**
+     * 线上成交额
+     */
+    private Integer onlineTurnover;
+
+    /**
+     * 线上观展人数
+     */
+    private Integer onlineViewer;
+
+    /**
      * 观展总人数
      */
     private Integer viewerNum;
@@ -83,6 +98,26 @@ public class ResSummary {
      * 下一步工作计划
      */
     private String nextWorkPlan;
+
+    /**
+     * 填写单位
+     */
+    private String writeObject;
+
+    /**
+     * 负责处室
+     */
+    private String department;
+
+    /**
+     * 负责人
+     */
+    private String charger;
+
+    /**
+     * 电话号码
+     */
+    private String teleNum;
 
     /**
      * 总结报告id

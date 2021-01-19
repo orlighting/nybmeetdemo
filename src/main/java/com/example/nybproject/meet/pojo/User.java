@@ -1,6 +1,7 @@
 package com.example.nybproject.meet.pojo;
 
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -36,6 +37,11 @@ public class User {
      * 用户真实姓名
      */
     private String name;
+
+    /**
+     * 用户账号是否被冻结
+     */
+    private Boolean isFreeze;
 
     /**
      * 记录创建时间

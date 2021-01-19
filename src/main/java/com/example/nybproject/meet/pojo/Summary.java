@@ -72,6 +72,16 @@ public class Summary {
     private Integer turnover;
 
     /**
+     * 线上成交额
+     */
+    private Integer onlineTurnover;
+
+    /**
+     * 线上观展人数
+     */
+    private Integer onlineViewer;
+
+    /**
      * 观展总人数
      */
     private Integer viewerNum;
@@ -90,6 +100,26 @@ public class Summary {
      * 下一步工作计划
      */
     private String nextWorkPlan;
+
+    /**
+     * 填写单位
+     */
+    private String writeObject;
+
+    /**
+     * 负责处室
+     */
+    private String department;
+
+    /**
+     * 负责人
+     */
+    private String charger;
+
+    /**
+     * 电话号码
+     */
+    private String teleNum;
 
     /**
      * 总结报告id

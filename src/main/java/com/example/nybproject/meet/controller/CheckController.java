@@ -1,12 +1,15 @@
 package com.example.nybproject.meet.controller;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.example.nybproject.meet.mapper.DetailMeetMapper;
 import com.example.nybproject.meet.mapper.EasyMeetMapper;
 import com.example.nybproject.meet.pojo.DetailMeet;
 import com.example.nybproject.meet.pojo.EasyMeet;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
+import com.example.nybproject.meet.util.SmsUtil;
 import com.mongodb.client.gridfs.model.GridFSFile;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
@@ -69,8 +72,15 @@ public class CheckController {
 
         easyMeet.setUpdateTime(LocalDateTime.now());
 
+
         int result = easyMeetMapper.checkEasyMeet(easyMeet.getId(), easyMeet.getCheckState(), easyMeet.getAdminId());
         if (result == 1) {
+            Boolean state = easyMeet.getCheckState() == 1 ? true : false;
+            try {
+                SmsUtil.sendCheckSms(easyMeet.getTeleNum(), easyMeet.getName(), state);
+            } catch (ClientException e) {
+                e.printStackTrace();
+            }
             return HttpResult.of();
         }
 
@@ -137,6 +147,12 @@ public class CheckController {
 
         int result = detailMeetMapper.checkDetailMeet(detailMeet.getId(), detailMeet.getCheckState(), detailMeet.getAdminId());
         if (result == 1) {
+            Boolean state = detailMeet.getCheckState()==2 ? true : false;
+            try {
+                SmsUtil.sendCheckSms(detailMeet.getTeleNum(), detailMeet.getName(), state);
+            } catch (ClientException e) {
+                e.printStackTrace();
+            }
             return HttpResult.of();
         }
         return HttpResult.of(HttpResultCodeEnum.SYSTEM_ERROR);
