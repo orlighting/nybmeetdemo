@@ -28,6 +28,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -75,12 +76,12 @@ public class CheckController {
 
         int result = easyMeetMapper.checkEasyMeet(easyMeet.getId(), easyMeet.getCheckState(), easyMeet.getAdminId());
         if (result == 1) {
-            Boolean state = easyMeet.getCheckState() == 1 ? true : false;
-            try {
-                SmsUtil.sendCheckSms(easyMeet.getTeleNum(), easyMeet.getName(), state);
-            } catch (ClientException e) {
-                e.printStackTrace();
-            }
+//            Boolean state = easyMeet.getCheckState() == 1 ? true : false;
+//            try {
+//                SmsUtil.sendCheckSms(easyMeet.getTeleNum(), easyMeet.getName(), state);
+//            } catch (ClientException e) {
+//                e.printStackTrace();
+//            }
             return HttpResult.of();
         }
 
@@ -107,12 +108,11 @@ public class CheckController {
     @CrossOrigin
     @RequestMapping("/detailFile")
     public ResponseEntity<FileSystemResource> detailList(@RequestBody JSONObject fileId) {
-        System.out.println(fileId);
 
         try {
             GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId.get("fileId"))));
             GridFsResource gridFsResource = gridFsTemplate.getResource(gridFSFile);
-            File file = new File("tmp");
+            File file = new File(System.getProperty("java.io.tmpdir") + File.separator + "dmp");
             FileUtils.copyInputStreamToFile(gridFsResource.getInputStream(), file);
 
             HttpHeaders headers = new HttpHeaders();
@@ -147,12 +147,12 @@ public class CheckController {
 
         int result = detailMeetMapper.checkDetailMeet(detailMeet.getId(), detailMeet.getCheckState(), detailMeet.getAdminId());
         if (result == 1) {
-            Boolean state = detailMeet.getCheckState()==2 ? true : false;
-            try {
-                SmsUtil.sendCheckSms(detailMeet.getTeleNum(), detailMeet.getName(), state);
-            } catch (ClientException e) {
-                e.printStackTrace();
-            }
+//            Boolean state = detailMeet.getCheckState()==2 ? true : false;
+//            try {
+//                SmsUtil.sendCheckSms(detailMeet.getTeleNum(), detailMeet.getName(), state);
+//            } catch (ClientException e) {
+//                e.printStackTrace();
+//            }
             return HttpResult.of();
         }
         return HttpResult.of(HttpResultCodeEnum.SYSTEM_ERROR);

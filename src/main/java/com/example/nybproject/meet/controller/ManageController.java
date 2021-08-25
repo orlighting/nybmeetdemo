@@ -4,13 +4,17 @@ import com.example.nybproject.meet.mapper.UserMapper;
 import com.example.nybproject.meet.pojo.User;
 import com.example.nybproject.meet.result.HttpResult;
 import com.example.nybproject.meet.result.HttpResultCodeEnum;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionReader;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Objects;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -68,6 +72,12 @@ public class ManageController {
 
         User resUser = userMapper.getByMeetAddr(user.getMeetAddr());
 
+        BeanDefinitionReader beanDefinitionReader ;
+
+        TreeMap tm = new TreeMap();
+        Deque<Integer> dq = new LinkedList();
+        HashSet<Integer> hs = new HashSet<>();
+
         if(resUser != null){
 
             user.setPassword("123456");
@@ -76,6 +86,26 @@ public class ManageController {
         }
 
         return HttpResult.of(HttpResultCodeEnum.NONE_REQUEST_ACCOUNT);
+    }
+
+    /**
+     * 管理员冻结账户
+     * @param user
+     * @return
+     */
+    @RequestMapping("/freeze")
+    public HttpResult<Void> freezeUser(@RequestBody User user){
+
+        User resUser = userMapper.getByMeetAddr(user.getMeetAddr());
+
+        if(resUser != null){
+
+            user.setIsFreeze(true);
+            userMapper.updateByPrimaryKeySelective(user);
+
+        }
+
+        return HttpResult.of();
     }
 
 }
